@@ -4,7 +4,7 @@ from common.helper import Utils
 
 
 class Student:
-    def __init__(self, name, email, password):
+    def __init__(self, name: str, email: str, password: str):
         self._student_id = Utils.generate_student_id()
         self._name = name
         self._email = email
