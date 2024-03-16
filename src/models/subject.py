@@ -1,7 +1,7 @@
 from common.helper import Utils
 
 class Subject:
-    def __init__(self, name='', mark=0):
+    def __init__(self, name: str = '', mark: int = 0):
         self._subject_id = Utils.generate_subject_id()
         self._name = name
         self.mark = mark # Ensure the value passed to constructor has same validation defined in setter
@@ -32,7 +32,7 @@ class Subject:
         else: raise ValueError('Mark must be between 0 and 100.')
 
     @staticmethod
-    def calculate_grade(mark) -> str:
+    def calculate_grade(mark: int) -> str:
         # Calculates the grade based on the mark.
         if mark is None: return None
         if mark < 50: return 'Z'
