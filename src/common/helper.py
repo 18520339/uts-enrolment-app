@@ -20,12 +20,12 @@ class Utils:
     
     @staticmethod
     def generate_student_id() -> str:
-        # Generate a unique 6-digit student ID.
+        # Generate a unique 6-digit student ID
         return str(random.randint(1, 999999)).zfill(6)
 
     @staticmethod
     def generate_subject_id() -> str:
-        # Generate a unique 3-digit subject ID.
+        # Generate a unique 3-digit subject ID
         return str(random.randint(1, 999)).zfill(3) 
 
     @staticmethod
@@ -37,6 +37,16 @@ class Utils:
     def generate_subject_mark():
         # Generate a random subject mark between 25 and 100
         return random.randint(25, 100)
+
+    @staticmethod
+    def calculate_grade(mark: int) -> str:
+        # Calculates the grade based on the mark
+        if mark is None: return None
+        if mark < 50: return 'Z'
+        elif 50 <= mark < 65: return 'P'
+        elif 65 <= mark < 75: return 'C'
+        elif 75 <= mark < 85: return 'D'
+        return 'HD'
 
 
 class PasswordSecurer:
