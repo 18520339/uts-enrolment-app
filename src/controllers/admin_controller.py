@@ -24,7 +24,7 @@ class AdminController:
             grade_groups[student.overall_grade].append(student)
 
         for grade, students in grade_groups.items():
-            print(f'Grade {grade}:')
+            print(f'Grade {grade}:', end=' ')
             Utils.display_students_table(students, {'email': False, 'overall_grade': False})
 
 
@@ -39,11 +39,11 @@ class AdminController:
             else:
                 fail_students.append(student)
         
-        print('PASSED Students:')
+        print('PASSED Students:', end=' ')
         Utils.display_students_table(pass_students)
 
-        print('FAILED Students:')
-        Utils.display_students_table(pass_students)
+        print('FAILED Students:', end=' ')
+        Utils.display_students_table(fail_students)
 
     
     def remove_student_by_id(self, student_id: str) -> None:
@@ -58,6 +58,8 @@ class AdminController:
         # List all registered students
         students = self.database.load_students()
         if not students:
-            print("No students are currently registered.")
+            print('No students are currently registered.')
             return
+
+        print('All Registered Students:', end=' ')
         Utils.display_students_table(students, {'average_mark': False, 'overall_grade': False})
