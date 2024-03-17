@@ -1,4 +1,8 @@
 import re
+from typing import TYPE_CHECKING, List
+
+if TYPE_CHECKING:
+    from models import Student
 
 class Utils:
     # Constants for validation patterns
@@ -24,7 +28,7 @@ class Utils:
         return 'HD'
 
     @staticmethod
-    def display_students_table(students: List[Student], column_config: dict = {}) -> None:
+    def display_students_table(students: 'List[Student]', column_config: dict = {}) -> None:
         if students is None or len(students) == 0:
             print('<No students to display>')
             return
