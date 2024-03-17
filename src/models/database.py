@@ -28,7 +28,7 @@ class Database:
 
     def write_student(self, student: Student) -> None:
         # Write or update a student record in the data file
-        students = self.read_students()
+        students = self.load_students()
         for i, existing_student in enumerate(students):
             if existing_student.student_id == student.student_id:
                 students[i] = student
@@ -40,7 +40,7 @@ class Database:
 
     def remove_student(self, student_id: str) -> None:
         # Removes a student record from the data file by student ID
-        students = self.read_students()
+        students = self.load_students()
         students = [student for student in students if student.student_id != student_id]
         with open(self.filename, 'wb') as file:
             pickle.dump(students, file)
