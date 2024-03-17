@@ -71,13 +71,14 @@ class StudentController:
             self.current_student.enroll_subject(random_subject)
             self.database.write_student(self.current_student)
             print(f'You are now enrolled in {subjects_count} out of 4 subjects.')
-        raise Exception('Students are allowed to enroll 4 subjects only.')
+        else: print('Students are allowed to enroll 4 subjects only.')
 
 
     def remove_subject(self, subject_id: str) -> None:
         # Remove a subject from the current student's enrollment
         if self.current_student is None:
             raise Exception('No student is logged in.')
+
         self.current_student.remove_subject(subject_id)
         self.database.write_student(self.current_student)
         print(f'Subject with ID {subject_id} has been dropped.')
@@ -92,8 +93,7 @@ class StudentController:
     
     def logout_student(self) -> None:
         # Log out the current student
-        if self.current_student:
-            self.current_student = None
-            print('You have been logged out successfully.')
-        else:
-            print('No student is currently logged in.')
+        if self.current_student is None:
+            raise Exception('No student is logged in.')
+        self.current_student = None
+        print('You have been logged out successfully.')
