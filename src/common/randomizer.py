@@ -13,11 +13,13 @@ class Randomizer:
         return str(random.randint(1, 999)).zfill(3) 
 
     @staticmethod
-    def generate_subject_name():
+    def generate_subject_name() -> str:
         # Generate a random subject name
-        return random.choice(['Computer Science', 'Mathematics', 'Physics', 'Chemistry', 'Biology'])
+        subject_names = ['Computer Science', 'Mathematics', 'Physics', 'Chemistry', 'Biology']
+        subject_levels = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']
+        return random.choice(subject_names) + ' ' + random.choice(subject_levels)
 
     @staticmethod
-    def generate_subject_mark():
+    def generate_subject_mark() -> int:
         # Generate a random subject mark between 25 and 100
         return random.randint(25, 100)
