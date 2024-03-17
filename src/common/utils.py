@@ -24,7 +24,11 @@ class Utils:
         return 'HD'
 
     @staticmethod
-    def display_students_table(students: List[Student], column_config: dict = {}):
+    def display_students_table(students: List[Student], column_config: dict = {}) -> None:
+        if students is None or len(students) == 0:
+            print('<No students to display>')
+            return
+        
         columns = { # Format key: (header name, value function, width)
             'student_id': ('ID', lambda s: s.student_id, 10), 
             'name': ('Name', lambda s: s.name, 20),
@@ -34,7 +38,7 @@ class Utils:
             'overall_grade': ('Grade', lambda s: s.overall_grade, 20)
         }
 
-        header, separator = '|', '-'
+        header, separator = '\n|', '-'
         for key, value in columns.items():
             if column_config.get(key, True):
                 header += f' {value[0]}:<{value[2]} |'
