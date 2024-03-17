@@ -10,13 +10,13 @@ class AdminController:
 
 
     def clear_database(self) -> None:
-        # Clears all student records from the database
+        # Clear all student records from the database
         self.database.clear_data()
         print("Database cleared successfully.")
 
 
-    def group_student_by_grade(self) -> None:
-        # Groups students by their overall grade
+    def group_students_by_grade(self) -> None:
+        # Group students by their overall grade
         students = self.database.load_students()
         grade_groups: Dict[str, List[Student]] = defaultdict(list)
 
@@ -28,21 +28,13 @@ class AdminController:
             Utils.display_students_table(students, {'email': False, 'overall_grade': False})
 
 
-    def remove_student_by_id(self, student_id: str) -> None:
-        # Removes a student record from the database by student ID
-        if self.database.remove_student(student_id):
-            print(f'Student with ID {student_id} has been removed.')
-        else:
-            print(f'No student found with ID {student_id}.')
-
-
-    def partition_students(self) -> None:
-        # Partitions students into PASS and FAIL based on their average marks
+    def partition_students_performance(self) -> None:
+        # Partition students into PASS and FAIL based on their average marks
         students = self.database.load_students()
         pass_students, fail_students = [], []
 
         for student in students:
-            if student.average_mark >= 50:
+            if student.average_mark >= 50 and student.overall_grade != 'Z':
                 pass_students.append(student)
             else:
                 fail_students.append(student)
@@ -53,9 +45,17 @@ class AdminController:
         print('FAILED Students:')
         Utils.display_students_table(pass_students)
 
+    
+    def remove_student_by_id(self, student_id: str) -> None:
+        # Remove a student record from the database by student ID
+        if self.database.remove_student(student_id):
+            print(f'Student with ID {student_id} has been removed.')
+        else:
+            print(f'No student found with ID {student_id}.')
+
 
     def show_registered_students(self) -> None:
-        # Lists all registered students
+        # List all registered students
         students = self.database.load_students()
         if not students:
             print("No students are currently registered.")
