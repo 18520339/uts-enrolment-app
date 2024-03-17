@@ -36,7 +36,7 @@ class StudentController:
             if student.email == email and PasswordSecurer.verify_password(student.password, password):
                 self.current_student = student
                 return student
-        raise Exception("Login failed. Check your email and password or register if you haven't")
+        raise Exception("Login failed. Check your email and password or register if you haven't.")
 
 
     def change_student_password(self, old_password: str, new_password: str) -> None:
