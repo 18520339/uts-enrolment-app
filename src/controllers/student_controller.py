@@ -1,5 +1,5 @@
 from models import Student, Subject, Database
-from common import Utils, Randomizer
+from common import Utils, Randomizer, PasswordSecurer
 
 
 class StudentController:
@@ -23,8 +23,10 @@ class StudentController:
             raise ValueError('A student with this email already exists.')
         
         # Create and save the new student
-        new_student = Student(name, email, password)
+        hashed_password = PasswordSecurer.hash_password(password)
+        new_student = Student(name, email, hashed_password)
         self.database.write_student(new_student)
+
         print(f'Student {name} registered successfully with ID {new_student.student_id}.')
         return True
 
@@ -33,7 +35,7 @@ class StudentController:
         # Validates a student's login credentials. Returns the Student object if successful, else None
         students = self.database.load_students()
         for student in students:
-            if student.email == email and student.password == password:
+            if student.email == email and PasswordSecurer.verify_password(student.password, password):
                 self.current_student = student
                 print(f'Welcome, {student.name}! You have successfully logged in.')
                 return student
