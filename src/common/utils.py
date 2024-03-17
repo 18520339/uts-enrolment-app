@@ -7,11 +7,11 @@ class Utils:
 
     @staticmethod
     def validate_email(email: str) -> bool:
-        return bool(EMAIL_PATTERN.match(email))
+        return bool(Utils.EMAIL_PATTERN.match(email))
 
     @staticmethod
     def validate_password(password: str) -> bool:
-        return bool(PASSWORD_PATTERN.match(password))
+        return bool(Utils.PASSWORD_PATTERN.match(password))
 
     @staticmethod
     def calculate_grade(mark: int) -> str:
