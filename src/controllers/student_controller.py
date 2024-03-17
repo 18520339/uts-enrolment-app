@@ -8,7 +8,7 @@ class StudentController:
         self.current_student = None  # The logged-in student
 
 
-    def register_student(self, name: str, email: str, password: str) -> bool:
+    def register_student(self, name: str, email: str, password: str) -> Student:
         # Register a new student if the email and password are valid and the email doesn't already exist
         if not Utils.validate_email(email) or not Utils.validate_password(password):
             raise ValueError(
@@ -26,9 +26,7 @@ class StudentController:
         hashed_password = PasswordSecurer.hash_password(password)
         new_student = Student(name, email, hashed_password)
         self.database.write_student(new_student)
-
-        print(f'Student {name} registered successfully with ID {new_student.student_id}.')
-        return True
+        return new_student
 
 
     def login_student(self, email: str, password: str) -> Student:
@@ -37,7 +35,6 @@ class StudentController:
         for student in students:
             if student.email == email and PasswordSecurer.verify_password(student.password, password):
                 self.current_student = student
-                print(f'Welcome, {student.name}! You have successfully logged in.')
                 return student
         raise Exception("Login failed. Check your email and password or register if you haven't")
 
