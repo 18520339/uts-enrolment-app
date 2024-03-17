@@ -9,7 +9,7 @@ class StudentController:
 
 
     def register_student(self, name: str, email: str, password: str) -> bool:
-        # Registers a new student if the email and password are valid and the email doesn't already exist
+        # Register a new student if the email and password are valid and the email doesn't already exist
         if not Utils.validate_email(email) or not Utils.validate_password(password):
             raise ValueError(
                 f'Invalid email or password format:\n'
@@ -32,7 +32,7 @@ class StudentController:
 
 
     def login_student(self, email: str, password: str) -> Student:
-        # Validates a student's login credentials. Returns the Student object if successful, else None
+        # Validate a student's login credentials. Returns the Student object if successful, else None
         students = self.database.load_students()
         for student in students:
             if student.email == email and PasswordSecurer.verify_password(student.password, password):
@@ -43,7 +43,7 @@ class StudentController:
 
 
     def change_student_password(self, old_password: str, new_password: str) -> None:
-        # Changes the password for the current logged-in student
+        # Change the password for the current logged-in student
         if self.current_student is None:
             raise Exception('No student is logged in.')
         if old_password != self.current_student.password:
@@ -57,7 +57,7 @@ class StudentController:
 
 
     def enroll_random_subject(self) -> None:
-        # Enrolls the student in a subject by subject ID, if not already enrolled and if enrollment limit not reached 
+        # Enroll the student in a subject by subject ID, if not already enrolled and if enrollment limit not reached 
         # This is a simplified version without subject ID checking, assuming subject creation here for demonstration
         if self.current_student is None:
             raise Exception('No student is logged in.')
@@ -75,7 +75,7 @@ class StudentController:
 
 
     def remove_subject(self, subject_id: str) -> None:
-        # Removes a subject from the current student's enrollment
+        # Remove a subject from the current student's enrollment
         if self.current_student is None:
             raise Exception('No student is logged in.')
         self.current_student.remove_subject(subject_id)
@@ -83,7 +83,17 @@ class StudentController:
         print(f'Subject with ID {subject_id} has been dropped.')
 
 
-    def show_enrolled_subjects(self):
+    def show_enrolled_subjects(self) -> None:
+        # Show the subjects the current student is enrolled in
         if self.current_student is None:
             raise Exception('No student is logged in.')
         self.current_student.show_enrolled_subjects()
+
+    
+    def logout_student(self) -> None:
+        # Log out the current student
+        if self.current_student:
+            self.current_student = None
+            print('You have been logged out successfully.')
+        else:
+            print('No student is currently logged in.')
