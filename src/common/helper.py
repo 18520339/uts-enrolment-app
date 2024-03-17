@@ -48,6 +48,30 @@ class Utils:
         elif 75 <= mark < 85: return 'D'
         return 'HD'
 
+    @staticmethod
+    def display_students_table(students: List[Student], column_config: dict = {}):
+        columns = { # Format key: (header name, value function, width)
+            'student_id': ('ID', lambda s: s.student_id, 10), 
+            'name': ('Name', lambda s: s.name, 20),
+            'email': ('Email', lambda s: s.email, 30),
+            'subjects_cnt': ('Subjects Enrolled', lambda s: len(s.subjects), 20),
+            'average_mark': ('Avg. Mark', lambda s: s.average_mark, 20),
+            'overall_grade': ('Grade', lambda s: s.overall_grade, 20)
+        }
+
+        header, separator = '|', '-'
+        for key, value in columns.items():
+            if column_config.get(key, True):
+                header += f' {value[0]}:<{value[2]} |'
+                separator += '-' * (value[2] + 3)
+
+        for student in students:
+            row = '|'
+            for key, value in columns.items():
+                if column_config.get(key, True):
+                    row += f' {value[1](student):<{value[2]}} |'
+            print(row)
+            
 
 class PasswordSecurer:
     salt_length = 32  # The length of the salt in bytes
