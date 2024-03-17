@@ -10,6 +10,8 @@ class Student:
         self._email = email
         self._password = password
         self._subjects: List[Subject] = []
+        self._average_mark = 0
+        self._overall_grade = None # Grade will be calculated based on the mark
 
     @property
     def student_id(self):
@@ -31,6 +33,21 @@ class Student:
     def subjects(self):
         return self._subjects
 
+    @property
+    def average_mark(self):
+        return self._average_mark
+
+    @property
+    def overall_grade(self):
+        return self._overall_grade
+
+
+    def _recalculate_academic_performance(self):
+        # Recalculates the student's average mark and overall grade based on the subjects enrolled.
+        self._average_mark = sum(subject.mark for subject in self.subjects) / len(self.subjects)
+        self._overall_grade = Utils.calculate_grade(self._average_mark)
+        print(f'Academic performance recalculated. Average mark: {self._average_mark}, Grade: {self._overall_grade}')
+
 
     def change_password(self, old_password: str, new_password: str) -> None:
         # Changes the student's password after validating the new password.
@@ -51,6 +68,7 @@ class Student:
         if subject not in self.subjects:
             self.subjects.append(subject)
             print(f'Enrolled in subject {subject.subject_id} with mark {subject.mark} and grade {subject.grade}.')
+            self._recalculate_academic_performance()
         else:
             print('You have already enrolled in this subject.')
 
@@ -61,7 +79,7 @@ class Student:
             if subject.subject_id == subject_id:
                 self.subjects.remove(subject)
                 print(f'Subject {subject_id} removed successfully.')
-                return
+                self._recalculate_academic_performance()
         print('Subject not found.')
 
 
