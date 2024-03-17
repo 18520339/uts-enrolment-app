@@ -2,7 +2,7 @@ from common.helper import Utils
 
 class Subject:
     def __init__(self, name: str = '', mark: int = 0):
-        self._subject_id = Utils.generate_subject_id()
+        self._subject_id = Randomizer.generate_subject_id()
         self._name = name
         self.mark = mark # Ensure the value passed to constructor has same validation defined in setter
         self._grade = None # Grade will be calculated based on the mark

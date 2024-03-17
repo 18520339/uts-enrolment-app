@@ -1,11 +1,11 @@
 from typing import List
 from models import Subject
-from common.helper import Utils
+from common.helper import Utils, Randomizer
 
 
 class Student:
     def __init__(self, name: str, email: str, password: str):
-        self._student_id = Utils.generate_student_id()
+        self._student_id = Randomizer.generate_student_id()
         self._name = name
         self._email = email
         self._password = password
