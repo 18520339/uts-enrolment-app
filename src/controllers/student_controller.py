@@ -1,5 +1,5 @@
 from models import Student, Subject, Database
-from common.helper import Utils
+from common.helper import Utils, Randomizer
 
 
 class StudentController:
@@ -63,8 +63,8 @@ class StudentController:
         subjects_count = len(self.current_student.subjects)
         if subjects_count < 4:
             random_subject = Subject(
-                name = Utils.random_subject_name(),
-                mark = Utils.generate_subject_mark() 
+                name = Randomizer.generate_subject_name(),
+                mark = Randomizer.generate_subject_mark() 
             )
             self.current_student.enroll_subject(random_subject)
             self.database.write_student(self.current_student)
