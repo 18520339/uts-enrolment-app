@@ -44,7 +44,7 @@ class Student:
 
     def _recalculate_academic_performance(self):
         # Recalculates the student's average mark and overall grade based on the subjects enrolled.
-        self._average_mark = sum(subject.mark for subject in self.subjects) / len(self.subjects)
+        self._average_mark = sum(subject.mark for subject in self.subjects) / len(self.subjects) if self.subjects else 0
         self._overall_grade = Utils.calculate_grade(self._average_mark)
         print(f'Academic performance recalculated. Average mark: {self._average_mark}, Grade: {self._overall_grade}')
 
