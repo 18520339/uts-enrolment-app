@@ -5,17 +5,19 @@ if TYPE_CHECKING:
     from models import Student
 
 class Utils:
-    # Constants for validation patterns
-    EMAIL_PATTERN = re.compile(r'^[a-zA-Z]+.[a-zA-Z]+@university\.com$')
-    PASSWORD_PATTERN = re.compile(r'^[A-Z][a-zA-Z]{6,}\d{3,}$')
+    DATABASE_PATH = 'common/students.data'
+    EMAIL_PATTERN = r'^[a-zA-Z]+.[a-zA-Z]+@university\.com$'
+    PASSWORD_PATTERN = r'^[A-Z][a-zA-Z]{6,}\d{3,}$'
 
     @staticmethod
     def validate_email(email: str) -> bool:
-        return bool(Utils.EMAIL_PATTERN.match(email))
+        pattern = re.compile(Utils.EMAIL_PATTERN)
+        return bool(pattern.match(email))
 
     @staticmethod
     def validate_password(password: str) -> bool:
-        return bool(Utils.PASSWORD_PATTERN.match(password))
+        pattern = re.compile(Utils.PASSWORD_PATTERN)
+        return bool(pattern.match(password))
 
     @staticmethod
     def calculate_grade(mark: int) -> str:
