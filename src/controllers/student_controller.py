@@ -1,5 +1,5 @@
 from models import Student, Subject, Database
-from common.helper import Utils, Randomizer
+from common import Utils, Randomizer
 
 
 class StudentController:

@@ -1,7 +1,7 @@
 from typing import Dict, List
 from collections import defaultdict 
 from models import Database, Student
-from common.helper import Utils
+from common import Utils
 
 
 class AdminController:

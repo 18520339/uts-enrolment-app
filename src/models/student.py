@@ -1,6 +1,6 @@
 from typing import List
 from models import Subject
-from common.helper import Utils, Randomizer
+from common import Utils, Randomizer
 
 
 class Student:
