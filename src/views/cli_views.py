@@ -116,7 +116,7 @@ def student_course_system(student_controller):
             student_controller.remove_subject(subject_id)
 
         elif choice == '4' or choice.lower() == 's':
-            student_controller.show_enrolled_subjects(student)
+            student_controller.show_enrolled_subjects()
 
         elif choice == '5' or choice.lower() == 'x': 
             confirm = input('Are you sure you want to logout? (y/n):')
