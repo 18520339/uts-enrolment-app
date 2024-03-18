@@ -43,9 +43,9 @@ class StudentController:
         # Change the password for the current logged-in student
         if self.current_student is None:
             raise Exception('No student is logged in.')
-        if old_password != self.current_student.password:
+        if not PasswordSecurer.verify_password(self.current_student.password, old_password):
             raise ValueError('Invalid current password. Password change failed.')
-        if not utils.validate_password(new_password):
+        if not Utils.validate_password(new_password):
             raise ValueError('Password must start with UPPERCASE, followed by >= 6 letters and >= 3 digits.')
         
         self.current_student.change_password(old_password, new_password)
