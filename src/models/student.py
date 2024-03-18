@@ -7,7 +7,7 @@ class Student:
     def __init__(self, name: str, email: str, password: str):
         self._student_id = Randomizer.generate_student_id()
         self._name = name
-        self._email = email
+        self._email = email.lower()
         self._password = password
         self._subjects: List[Subject] = []
         self._average_mark = 0
@@ -23,7 +23,7 @@ class Student:
 
     @property
     def email(self):
-        return self._email
+        return self._email.lower()
 
     @property
     def password(self):

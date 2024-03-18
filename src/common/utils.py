@@ -12,7 +12,7 @@ class Utils:
     @staticmethod
     def validate_email(email: str) -> bool:
         pattern = re.compile(Utils.EMAIL_PATTERN)
-        return bool(pattern.match(email))
+        return bool(pattern.match(email.lower()))
 
     @staticmethod
     def validate_password(password: str) -> bool:
