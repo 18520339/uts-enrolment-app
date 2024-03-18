@@ -66,7 +66,7 @@ def student_system(student_controller):
         if choice == '1' or choice.lower() == 'r':
             print('\nStudent Sign Up')
             name = input('Enter your name: ')
-            email = input('Enter your email: ')
+            email = input('Enter your email: ').lower()
             password = getpass('Enter your password: ')
             try: 
                 student = student_controller.register_student(name, email, password)
@@ -76,7 +76,7 @@ def student_system(student_controller):
 
         elif choice == '2' or choice.lower() == 'l':
             print('\nStudent Sign In')
-            email = input('Enter your email: ')
+            email = input('Enter your email: ').lower()
             password = getpass('Enter your password: ')
             try:
                 student = student_controller.login_student(email, password)
@@ -102,13 +102,13 @@ def student_course_system(student_controller):
         choice = input('Enter your choice (1-5 or first letters): ')
 
         if choice == '1' or choice.lower() == 'c':
-            old_password = input('Enter your old password: ')
+            old_password = getpass('Enter your old password: ')
             new_password = getpass('Enter your new password: ')
             try:
                 student_controller.change_student_password(old_password, new_password)
             except Exception as e: print(e)
 
-        if choice == '2' or choice.lower() == 'e':
+        elif choice == '2' or choice.lower() == 'e':
             student_controller.enroll_random_subject()
 
         elif choice == '3' or choice.lower() == 'r':
