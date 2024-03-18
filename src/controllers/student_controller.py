@@ -14,7 +14,7 @@ class StudentController:
             raise ValueError(
                 f'Invalid email or password format:\n'
                 f'- Email must be in the form of firstname.lastname@university.com.\n'
-                f'- Password must start with UPPERCASE, followed by >= 6 letters and >= 3 digits.'
+                f'- Password must start with UPPERCASE, followed by >= 5 letters and >= 3 digits.'
             )
         
         # Check if email already exists
@@ -46,7 +46,7 @@ class StudentController:
         if not PasswordSecurer.verify_password(self.current_student.password, old_password):
             raise ValueError('Invalid current password. Password change failed.')
         if not Utils.validate_password(new_password):
-            raise ValueError('Password must start with UPPERCASE, followed by >= 6 letters and >= 3 digits.')
+            raise ValueError('Password must start with UPPERCASE, followed by >= 5 letters and >= 3 digits.')
         
         self.current_student.change_password(old_password, new_password)
         self.database.write_student(self.current_student)
