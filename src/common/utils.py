@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 class Utils:
     DATABASE_PATH = 'common/students.data'
     EMAIL_PATTERN = r'^[a-zA-Z]+.[a-zA-Z]+@university\.com$'
-    PASSWORD_PATTERN = r'^[A-Z][a-zA-Z]{6,}\d{3,}$'
+    PASSWORD_PATTERN = r'^[A-Z][a-zA-Z]{5,}\d{3,}$'
 
     @staticmethod
     def validate_email(email: str) -> bool:
