@@ -11,7 +11,7 @@ def university_system():
     os.system('cls' if os.name == 'nt' else 'clear')
     while True:
         print('===== Welcome to the University Enrollment System =====')
-        print('1. (A)dmin | 2. (S)tudent | 3. (X) Exit System')
+        print('1. (A)dmin | 2. (S)tudent | 3. (X) Exit')
         choice = input('Enter your choice (1-3 or first letters): ').lower()
 
         if choice in ['1', 'a']: 
@@ -49,7 +49,7 @@ def admin_system(admin_controller):
             admin_controller.partition_students_performance()
         
         elif choice in ['4', 'r']:
-            student_id = input('Enter the student ID to remove: ')
+            student_id = input('\nEnter the student ID to remove: ')
             admin_controller.remove_student_by_id(student_id)
             
         elif choice in ['5', 's']: 
@@ -67,7 +67,7 @@ def admin_system(admin_controller):
 def student_system(student_controller):
     while True:
         print('\n<BACK|===== Student System =====|')
-        print('1. (R)egister | 2. (L)ogin | 3. (X) Logout')
+        print('1. (R)egister | 2. (L)ogin | 3. (X) Exit')
         choice = input('Enter your choice (1-3 or first letters): ').lower()
 
         if choice in ['1', 'r']:
@@ -110,20 +110,20 @@ def student_course_system(student_controller):
         choice = input('Enter your choice (1-5 or first letters): ').lower()
 
         if choice in ['1', 'c']:
-            old_password = getpass('Enter your old password: ')
+            old_password = getpass('\nEnter your old password: ')
             try:
                 if student_controller.verify_password(old_password):
                     new_password = getpass('Enter your new password: ')
                     if not Utils.validate_password(new_password):
                         print('Password must start with UPPERCASE, followed by >= 5 letters and >= 3 digits.')
-                    else: student_controller.change_student_password(old_password, new_password)
+                    else: student_controller.change_student_password(new_password)
             except Exception as e: print(e)
 
         elif choice in ['2', 'e']:
             student_controller.enroll_random_subject()
 
         elif choice in ['3', 'r']:
-            subject_id = input('Enter subject ID to remove: ')
+            subject_id = input('\nEnter subject ID to remove: ')
             student_controller.remove_subject(subject_id)
 
         elif choice in ['4', 's']:
