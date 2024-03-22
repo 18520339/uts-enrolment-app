@@ -50,16 +50,17 @@ class Student:
         # Recalculates the student's average mark and overall grade based on the subjects enrolled.
         self._average_mark = sum(subject.mark for subject in self.subjects) / len(self.subjects) if self.subjects else 0
         self._overall_grade = Utils.calculate_grade(self._average_mark)
-        print(f'Academic performance recalculated. Average mark: {self._average_mark}, Grade: {self._overall_grade}')
+        print(f'Overall GPA recalculated. Average mark: {self._average_mark:.2f}, Grade: {self._overall_grade}')
 
 
-    def enroll_subject(self, subject: Subject) -> None:
+    def enroll_subject(self, subject: Subject) -> bool:
         # Enrolls the student in a subject if not already enrolled
         if subject not in self.subjects:
             self.subjects.append(subject)
-            print('Enrolled in', subject)
+            print('\nEnrolled in', subject)
             self._recalculate_academic_performance()
-        else: print('You have already enrolled in this subject.')
+            return True
+        return False
 
   
     def remove_subject(self, subject_id: str) -> bool:
@@ -67,6 +68,7 @@ class Student:
         for subject in self.subjects:
             if subject.subject_id == subject_id:
                 self.subjects.remove(subject)
+                print(f'Subject with ID {subject_id} has been dropped.')
                 self._recalculate_academic_performance()
                 return True
         return False
