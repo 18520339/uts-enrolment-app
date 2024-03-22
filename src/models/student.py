@@ -49,20 +49,6 @@ class Student:
         print(f'Academic performance recalculated. Average mark: {self._average_mark}, Grade: {self._overall_grade}')
 
 
-    def change_password(self, old_password: str, new_password: str) -> None:
-        # Changes the student's password after validating the new password.
-        if old_password != self.password:
-            print('Invalid current password. Password change failed.')
-            return
-        
-        if not Utils.validate_password(new_password):
-            print('Password change failed. Make sure your new password format is valid.')
-            return
-
-        self.password = new_password
-        print('Password changed successfully.')
-
-
     def enroll_subject(self, subject: Subject) -> None:
         # Enrolls the student in a subject if not already enrolled
         if subject not in self.subjects:

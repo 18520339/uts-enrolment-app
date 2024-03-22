@@ -109,9 +109,10 @@ def student_course_system(student_controller):
 
         if choice in ['1', 'c']:
             old_password = getpass('Enter your old password: ')
-            new_password = getpass('Enter your new password: ')
             try:
-                student_controller.change_student_password(old_password, new_password)
+                if student_controller.verify_password(old_password):
+                    new_password = getpass('Enter your new password: ')
+                    student_controller.change_student_password(old_password, new_password)
             except Exception as e: print(e)
 
         elif choice in ['2', 'e']:
