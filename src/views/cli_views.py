@@ -11,17 +11,17 @@ def university_system():
     while True:
         print('===== Welcome to the University Enrollment System =====')
         print('1. (A)dmin | 2. (S)tudent | 3. (X) Exit System')
-        choice = input('Enter your choice (1-3 or first letters): ')
+        choice = input('Enter your choice (1-3 or first letters): ').lower()
 
-        if choice == '1' or choice.lower() == 'a': 
+        if choice in ['1', 'a']: 
             admin_controller = AdminController()
             admin_system(admin_controller)
             
-        elif choice == '2' or choice.lower() == 's': 
+        elif choice in ['2', 's']: 
             student_controller = StudentController()
             student_system(student_controller)
 
-        elif choice == '3' or choice.lower() == 'x': exit()
+        elif choice in ['3', 'x']: exit()
         else: 
             os.system('cls' if os.name == 'nt' else 'clear')
             print('Invalid option. Please try again.')
@@ -37,23 +37,29 @@ def admin_system(admin_controller):
         print('5. (S)how all registered students')
         print('6. (X) Logout and back to University System')
 
-        choice = input('Enter your choice (1-6 or first letters): ')
-        if choice == '1' or choice.lower() == 'c': 
+        choice = input('Enter your choice (1-6 or first letters): ').lower()
+        if choice in ['1', 'c']: 
             admin_controller.clear_database()
-        elif choice == '2' or choice.lower() == 'g': 
+            
+        elif choice in ['2', 'g']: 
             admin_controller.group_students_by_grade()
-        elif choice == '3' or choice.lower() == 'p':
+            
+        elif choice in ['3', 'p']: 
             admin_controller.partition_students_performance()
-        elif choice == '4' or choice.lower() == 'r':
+        
+        elif choice in ['4', 'r']:
             student_id = input('Enter the student ID to remove: ')
             admin_controller.remove_student_by_id(student_id)
-        elif choice == '5' or choice.lower() == 's':
+            
+        elif choice in ['5', 's']: 
             admin_controller.show_registered_students()
-        elif choice == '6' or choice.lower() == 'x':
-            confirm = input('Are you sure you want to logout? (y/n): ')
-            if confirm == '' or confirm.lower() == 'y' or confirm.lower() == 'yes': 
+        
+        elif choice in ['6', 'x']:
+            confirm = input('Are you sure you want to logout? (y/n): ').lower()
+            if confirm in ['', 'y', 'yes']: 
                 os.system('cls' if os.name == 'nt' else 'clear')
                 break
+            
         else: print('Invalid option. Please try again.')
             
 
@@ -61,9 +67,9 @@ def student_system(student_controller):
     while True:
         print('\n<BACK|===== Student System =====|')
         print('1. (R)egister | 2. (L)ogin | 3. (X) Logout')
-        choice = input('Enter your choice (1-3 or first letters): ')
+        choice = input('Enter your choice (1-3 or first letters): ').lower()
 
-        if choice == '1' or choice.lower() == 'r':
+        if choice in ['1', 'r']:
             print('\nStudent Sign Up')
             name = input('Enter your name: ')
             email = input('Enter your email: ').lower()
@@ -74,7 +80,7 @@ def student_system(student_controller):
                     print(f'Student {student.name} registered successfully with ID {student.student_id}.')
             except Exception as e: print(e)
 
-        elif choice == '2' or choice.lower() == 'l':
+        elif choice in ['2', 'l']:
             print('\nStudent Sign In')
             email = input('Enter your email: ').lower()
             password = getpass('Enter your password: ')
@@ -85,7 +91,7 @@ def student_system(student_controller):
                     student_course_system(student_controller)
             except Exception as e: print(e)
 
-        elif choice == '3' or choice.lower() == 'x': 
+        elif choice in ['3', 'x']: 
             os.system('cls' if os.name == 'nt' else 'clear')
             break
         else: print('Invalid option. Please try again.')
@@ -99,28 +105,28 @@ def student_course_system(student_controller):
         print('3. (R)emove a subject')
         print('4. (S)how all enrolled subjects')
         print('5. (X) Logout and back to Student System')
-        choice = input('Enter your choice (1-5 or first letters): ')
+        choice = input('Enter your choice (1-5 or first letters): ').lower()
 
-        if choice == '1' or choice.lower() == 'c':
+        if choice in ['1', 'c']:
             old_password = getpass('Enter your old password: ')
             new_password = getpass('Enter your new password: ')
             try:
                 student_controller.change_student_password(old_password, new_password)
             except Exception as e: print(e)
 
-        elif choice == '2' or choice.lower() == 'e':
+        elif choice in ['2', 'e']:
             student_controller.enroll_random_subject()
 
-        elif choice == '3' or choice.lower() == 'r':
+        elif choice in ['3', 'r']:
             subject_id = input('Enter subject ID to remove: ')
             student_controller.remove_subject(subject_id)
 
-        elif choice == '4' or choice.lower() == 's':
+        elif choice in ['4', 's']:
             student_controller.show_enrolled_subjects()
 
-        elif choice == '5' or choice.lower() == 'x': 
-            confirm = input('Are you sure you want to logout? (y/n):')
-            if confirm == '' or confirm.lower() == 'y' or confirm.lower() == 'yes':
+        elif choice in ['5', 'x']: 
+            confirm = input('Are you sure you want to logout? (y/n):').lower() 
+            if confirm in ['', 'y', 'yes']:
                 os.system('cls' if os.name == 'nt' else 'clear')
                 student_controller.logout_student()
                 break
