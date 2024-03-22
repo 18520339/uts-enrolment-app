@@ -15,7 +15,7 @@ class Randomizer:
     @staticmethod
     def generate_subject_name() -> str:
         # Generate a random subject name
-        subject_names = ['Computer Science', 'Mathematics', 'Physics', 'Chemistry', 'Biology']
+        subject_names = ['Database', 'Network', 'Programming', 'Mathematics', 'Physics', 'Chemistry', 'Biology']
         subject_levels = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']
         return random.choice(subject_names) + ' ' + random.choice(subject_levels)
 
