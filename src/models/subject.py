@@ -4,8 +4,10 @@ class Subject:
     def __init__(self, name: str = '', mark: int = 0):
         self._subject_id = Randomizer.generate_subject_id()
         self._name = name
-        self.mark = mark # Ensure the value passed to constructor has same validation defined in setter
         self._grade = None # Grade will be calculated based on the mark
+        
+        # This line must be after the grade or the constructor will set the grade to None when the setter finished
+        self.mark = mark # Ensure the value passed to constructor has same validation defined in setter
 
     @property
     def subject_id(self):
@@ -30,7 +32,7 @@ class Subject:
             self._mark = value
             self._grade = Utils.calculate_grade(value)
         else: raise ValueError('Mark must be between 0 and 100.')
-
+        
     def __str__(self):
         # Returns a string representation of the subject, useful for debugging.
-        return f'Subject ID: {self.subject_id}, Name: {self.name}, Mark: {self.mark}, Grade: {self.grade}'
+        return f'Subject ID: {self.subject_id} | Name: {self.name}\t| Mark: {self.mark} | Grade: {self.grade}'
