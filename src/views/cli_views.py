@@ -4,6 +4,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from getpass import getpass
 from controllers import AdminController, StudentController
+from common import Utils
 
 
 def university_system():
@@ -72,24 +73,25 @@ def student_system(student_controller):
         if choice in ['1', 'r']:
             print('\nStudent Sign Up')
             name = input('Enter your name: ')
-            email = input('Enter your email: ').lower()
-            password = getpass('Enter your password: ')
-            try: 
-                student = student_controller.register_student(name, email, password)
-                if student:
-                    print(f'Student {student.name} registered successfully with ID {student.student_id}.')
-            except Exception as e: print(e)
-
+            email, password = Utils.get_credentials()
+            
+            if email and password:
+                try: 
+                    student = student_controller.register_student(name, email, password)
+                    if student: print(f'Student {student.name} registered successfully with ID {student.student_id}.')
+                except Exception as e: print(e)
+       
         elif choice in ['2', 'l']:
             print('\nStudent Sign In')
-            email = input('Enter your email: ').lower()
-            password = getpass('Enter your password: ')
-            try:
-                student = student_controller.login_student(email, password)
-                if student:
-                    print(f'Welcome {student.name}! You have successfully logged in.')
-                    student_course_system(student_controller)
-            except Exception as e: print(e)
+            email, password = Utils.get_credentials()
+            
+            if email and password:
+                try: 
+                    student = student_controller.login_student(email, password)
+                    if student:
+                        print(f'Welcome {student.name}! You have successfully logged in.')
+                        student_course_system(student_controller)
+                except Exception as e: print(e)
 
         elif choice in ['3', 'x']: 
             os.system('cls' if os.name == 'nt' else 'clear')
@@ -112,7 +114,9 @@ def student_course_system(student_controller):
             try:
                 if student_controller.verify_password(old_password):
                     new_password = getpass('Enter your new password: ')
-                    student_controller.change_student_password(old_password, new_password)
+                    if not Utils.validate_password(new_password):
+                        print('Password must start with UPPERCASE, followed by >= 5 letters and >= 3 digits.')
+                    else: student_controller.change_student_password(old_password, new_password)
             except Exception as e: print(e)
 
         elif choice in ['2', 'e']:

@@ -1,5 +1,5 @@
 from models import Student, Subject, Database
-from common import Utils, Randomizer, PasswordSecurer
+from common import Randomizer, PasswordSecurer
 
 
 class StudentController:
@@ -9,13 +9,9 @@ class StudentController:
 
 
     def register_student(self, name: str, email: str, password: str) -> Student:
-        # Register a new student if the email and password are valid and the email doesn't already exist
-        if not Utils.validate_email(email) or not Utils.validate_password(password):
-            raise ValueError(
-                f'Invalid email or password format:\n'
-                f'- Email must be in the form of firstname.lastname@university.com.\n'
-                f'- Password must start with UPPERCASE, followed by >= 5 letters and >= 3 digits.'
-            )
+        # Register a new student if the email doesn't already exist
+        if self.current_student is not None:
+            raise Exception('Another student is already logged in. Please logout first.')
         
         # Check if email already exists
         students = self.database.load_students()
@@ -31,6 +27,9 @@ class StudentController:
 
     def login_student(self, email: str, password: str) -> Student:
         # Validate a student's login credentials. Returns the Student object if successful, else None
+        if self.current_student is not None:
+            raise Exception('Another student is already logged in. Please logout first.')
+        
         students = self.database.load_students()
         for student in students:
             if student.email == email and PasswordSecurer.verify_password(student.password, password):
@@ -52,9 +51,7 @@ class StudentController:
         # Change the password for the current logged-in student
         if self.current_student is None:
             raise Exception('No student is logged in.')
-        if not Utils.validate_password(new_password):
-            raise ValueError('Password must start with UPPERCASE, followed by >= 5 letters and >= 3 digits.')
-        
+                
         self.current_student.password = PasswordSecurer.hash_password(new_password)
         self.database.write_student(self.current_student)
         print('Password changed successfully.')
