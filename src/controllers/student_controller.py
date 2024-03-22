@@ -68,9 +68,10 @@ class StudentController:
                 name = Randomizer.generate_subject_name(),
                 mark = Randomizer.generate_subject_mark() 
             )
-            self.current_student.enroll_subject(random_subject)
-            self.database.write_student(self.current_student)
-            print(f'You are now enrolled in {len(self.current_student.subjects)}/4 subjects.')
+            if self.current_student.enroll_subject(random_subject):
+                self.database.write_student(self.current_student)
+                print(f'You are now enrolled in {len(self.current_student.subjects)}/4 subjects.')
+            else: print('You have already enrolled in this subject.')
         else: print('Students are allowed to enroll 4 subjects only.')
 
 
@@ -79,9 +80,12 @@ class StudentController:
         if self.current_student is None:
             raise Exception('No student is logged in.')
 
-        self.current_student.remove_subject(subject_id)
-        self.database.write_student(self.current_student)
-        print(f'Subject with ID {subject_id} has been dropped.')
+        if len(self.current_student.subjects) >= 0:
+            if self.current_student.remove_subject(subject_id):
+                self.database.write_student(self.current_student)
+                print(f'You are now enrolled in {len(self.current_student.subjects)}/4 subjects.')
+            else: print('Subject not found in your enrollment.')
+        else: print('You are not enrolled in any subjects.')
 
 
     def show_enrolled_subjects(self) -> None:
