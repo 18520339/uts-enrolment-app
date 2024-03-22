@@ -5,7 +5,7 @@ from common import Utils, Randomizer, PasswordSecurer
 class StudentController:
     def __init__(self):
         self.database = Database()
-        self.current_student = None  # The logged-in student
+        self.current_student = None # The logged-in student
 
 
     def register_student(self, name: str, email: str, password: str) -> Student:
@@ -39,16 +39,23 @@ class StudentController:
         raise Exception("Login failed. Check your email and password or register if you haven't.")
 
 
-    def change_student_password(self, old_password: str, new_password: str) -> None:
-        # Change the password for the current logged-in student
+    def verify_password(self, old_password: str) -> bool:
+        # Verify a student's login credentials
         if self.current_student is None:
             raise Exception('No student is logged in.')
         if not PasswordSecurer.verify_password(self.current_student.password, old_password):
             raise ValueError('Invalid current password. Password change failed.')
+        return True
+    
+    
+    def change_student_password(self, new_password: str) -> None:
+        # Change the password for the current logged-in student
+        if self.current_student is None:
+            raise Exception('No student is logged in.')
         if not Utils.validate_password(new_password):
             raise ValueError('Password must start with UPPERCASE, followed by >= 5 letters and >= 3 digits.')
         
-        self.current_student.change_password(old_password, new_password)
+        self.current_student.password = PasswordSecurer.hash_password(new_password)
         self.database.write_student(self.current_student)
         print('Password changed successfully.')
 
@@ -59,15 +66,14 @@ class StudentController:
         if self.current_student is None:
             raise Exception('No student is logged in.')
         
-        subjects_count = len(self.current_student.subjects)
-        if subjects_count < 4:
+        if len(self.current_student.subjects) < 4:
             random_subject = Subject(
                 name = Randomizer.generate_subject_name(),
                 mark = Randomizer.generate_subject_mark() 
             )
             self.current_student.enroll_subject(random_subject)
             self.database.write_student(self.current_student)
-            print(f'You are now enrolled in {subjects_count} out of 4 subjects.')
+            print(f'You are now enrolled in {len(self.current_student.subjects)}/4 subjects.')
         else: print('Students are allowed to enroll 4 subjects only.')
 
 
