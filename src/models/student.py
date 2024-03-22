@@ -13,7 +13,7 @@ class Student:
         self._average_mark = 0
         self._overall_grade = None # Grade will be calculated based on the mark
 
-    @property
+    @property # This creates an API that does not allow a value to be set
     def student_id(self):
         return self._student_id
 
@@ -40,9 +40,13 @@ class Student:
     @property
     def overall_grade(self):
         return self._overall_grade
+    
+    @password.setter
+    def password(self, new_password: str):
+        self._password = new_password
 
 
-    def _recalculate_academic_performance(self):
+    def _recalculate_academic_performance(self) -> None:
         # Recalculates the student's average mark and overall grade based on the subjects enrolled.
         self._average_mark = sum(subject.mark for subject in self.subjects) / len(self.subjects) if self.subjects else 0
         self._overall_grade = Utils.calculate_grade(self._average_mark)
@@ -53,26 +57,23 @@ class Student:
         # Enrolls the student in a subject if not already enrolled
         if subject not in self.subjects:
             self.subjects.append(subject)
-            print(f'Enrolled in subject {subject.subject_id} with mark {subject.mark} and grade {subject.grade}.')
+            print('Enrolled in', subject)
             self._recalculate_academic_performance()
-        else:
-            print('You have already enrolled in this subject.')
+        else: print('You have already enrolled in this subject.')
 
   
-    def remove_subject(self, subject_id: str) -> None:
+    def remove_subject(self, subject_id: str) -> bool:
         # Removes a subject from the student's enrolled subjects list by subject ID.
         for subject in self.subjects:
             if subject.subject_id == subject_id:
                 self.subjects.remove(subject)
-                print(f'Subject {subject_id} removed successfully.')
                 self._recalculate_academic_performance()
-        print('Subject not found.')
+                return True
+        return False
 
 
-    def show_enrolled_subjects(self):
+    def show_enrolled_subjects(self) -> None:
         if len(self.subjects) == 0:
             print('No subjects enrolled.')
             return
-
-        for subject in self.subjects:
-            print(f'Subject ID: {subject.subject_id}, Mark: {subject.mark}, Grade: {subject.grade}')
+        for subject in self.subjects: print(subject)
