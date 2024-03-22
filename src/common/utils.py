@@ -1,4 +1,5 @@
 import re
+from getpass import getpass
 from typing import TYPE_CHECKING, List
 
 if TYPE_CHECKING:
@@ -6,7 +7,7 @@ if TYPE_CHECKING:
 
 class Utils:
     DATABASE_PATH = 'common/students.data'
-    EMAIL_PATTERN = r'^[a-zA-Z]+.[a-zA-Z]+@university\.com$'
+    EMAIL_PATTERN = r'^[a-zA-Z0-9]+.[a-zA-Z0-9]+@university\.com$'
     PASSWORD_PATTERN = r'^[A-Z][a-zA-Z]{5,}\d{3,}$'
 
     @staticmethod
@@ -19,6 +20,19 @@ class Utils:
         pattern = re.compile(Utils.PASSWORD_PATTERN)
         return bool(pattern.match(password))
 
+    @staticmethod
+    def get_credentials():
+        email = input('Enter your email: ').lower()
+        if not Utils.validate_email(email):
+            print('Email must be in the form of firstname.lastname@university.com.')
+            return None, None
+        
+        password = getpass('Enter your password: ')
+        if not Utils.validate_password(password):
+            print('Password must start with UPPERCASE, followed by >= 5 letters and >= 3 digits.')
+            return None, None
+        return email, password
+    
     @staticmethod
     def calculate_grade(mark: int) -> str:
         # Calculates the grade based on the mark
