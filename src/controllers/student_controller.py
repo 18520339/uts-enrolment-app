@@ -1,5 +1,5 @@
 from models import Student, Subject, Database
-from common import Randomizer, PasswordSecurer
+from common import PasswordSecurer
 
 
 class StudentController:
@@ -55,11 +55,7 @@ class StudentController:
             raise Exception('No student is logged in.')
         
         if len(self.current_student.subjects) < 4:
-            random_subject = Subject(
-                name = Randomizer.generate_subject_name(),
-                mark = Randomizer.generate_subject_mark() 
-            )
-            if self.current_student.enroll_subject(random_subject):
+            if self.current_student.enroll_subject(Subject()):
                 self.database.write_student(self.current_student)
                 print(f'You are now enrolled in {len(self.current_student.subjects)}/4 subjects.')
             else: print('You have already enrolled in this subject.')
