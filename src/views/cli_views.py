@@ -73,7 +73,7 @@ def student_system(student_controller):
         if choice in ['1', 'r']:
             print('\nStudent Sign Up')
             name = input('Enter your name: ')
-            email, password = Utils.get_credentials()
+            email, password = Utils.request_valid_credentials()
             
             if email and password:
                 try: 
@@ -83,7 +83,7 @@ def student_system(student_controller):
        
         elif choice in ['2', 'l']:
             print('\nStudent Sign In')
-            email, password = Utils.get_credentials()
+            email, password = Utils.request_valid_credentials()
             
             if email and password:
                 try: 
