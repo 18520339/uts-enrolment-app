@@ -3,11 +3,12 @@ from common import Utils, Randomizer
 class Subject:
     def __init__(self, name: str = '', mark: int = 0):
         self._subject_id = Randomizer.generate_subject_id()
-        self._name = name
+        self._name = Randomizer.generate_subject_name()
         self._grade = None # Grade will be calculated based on the mark
         
         # This line must be after the grade or the constructor will set the grade to None when the setter finished
-        self.mark = mark # Ensure the value passed to constructor has same validation defined in setter
+        # Ensure the value passed to constructor has same validation defined in setter
+        self.mark = Randomizer.generate_subject_mark()
 
     @property
     def subject_id(self):
