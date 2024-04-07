@@ -14,26 +14,16 @@ class Utils:
     @staticmethod
     def validate_email(email: str) -> bool:
         pattern = re.compile(Utils.EMAIL_PATTERN)
-        return bool(pattern.match(email.lower()))
+        if bool(pattern.match(email.lower())): return True
+        print('Email must be in the form of firstname.lastname@university.com.')
+        return False
 
     @staticmethod
     def validate_password(password: str) -> bool:
         pattern = re.compile(Utils.PASSWORD_PATTERN)
-        return bool(pattern.match(password))
-
-    @staticmethod
-    def request_valid_credentials():
-        email = input('Enter your email: ').lower()
-        if not Utils.validate_email(email):
-            print('Email must be in the form of firstname.lastname@university.com.')
-            return None, None
-        
-        password = getpass('Enter your password: ')
-        if not Utils.validate_password(password):
-            print('Password must start with UPPERCASE, followed by >= 5 letters and >= 3 digits.')
-            return None, None
-        return email, password
-    
+        if bool(pattern.match(password)): return True
+        print('Password must start with UPPERCASE, followed by >= 5 letters and >= 3 digits.')
+        return False
 
     # @staticmethod
     # def display_students_table(students: 'List[Student]', column_config: dict = {}) -> None:
