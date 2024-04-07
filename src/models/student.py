@@ -46,7 +46,7 @@ class Student:
         self._password = new_password
 
 
-    def _recalculate_academic_performance(self) -> None:
+    def _recalculate_overall_mark(self) -> None:
         # Recalculates the student's average mark and overall grade based on the subjects enrolled.
         self._average_mark = sum(subject.mark for subject in self.subjects) / len(self.subjects) if self.subjects else 0
         self._overall_grade = Utils.calculate_grade(self._average_mark)
@@ -58,18 +58,18 @@ class Student:
         if subject not in self.subjects:
             self.subjects.append(subject)
             print('\nEnrolled in', subject)
-            self._recalculate_academic_performance()
+            self._recalculate_overall_mark()
             return True
         return False
 
   
-    def remove_subject(self, subject_id: str) -> bool:
+    def remove_subject_by_id(self, subject_id: str) -> bool:
         # Removes a subject from the student's enrolled subjects list by subject ID.
         for subject in self.subjects:
             if subject.subject_id == subject_id:
                 self.subjects.remove(subject)
                 print(f'Subject with ID {subject_id} has been dropped.')
-                self._recalculate_academic_performance()
+                self._recalculate_overall_mark()
                 return True
         return False
 
