@@ -73,25 +73,29 @@ def student_system(student_controller):
         if choice in ['1', 'r']:
             print('\nStudent Sign Up')
             name = input('Enter your name: ')
-            email, password = Utils.request_valid_credentials()
-            
-            if email and password:
-                try: 
-                    student = student_controller.register_student(name, email, password)
-                    if student: print(f'Student {student.name} registered successfully with ID {student.student_id}.')
-                except Exception as e: print(e)
+            try: 
+                email = input('Enter your email: ')
+                if not Utils.validate_email(email): continue
+                password = getpass('Enter your password: ')
+                if not Utils.validate_password(password): continue
+                    
+                student = student_controller.register_student(name, email, password)
+                if student: print(f'Student {student.name} registered successfully with ID {student.student_id}.')
+            except Exception as e: print(e)
        
         elif choice in ['2', 'l']:
             print('\nStudent Sign In')
-            email, password = Utils.request_valid_credentials()
-            
-            if email and password:
-                try: 
-                    student = student_controller.login_student(email, password)
-                    if student:
-                        print(f'Welcome {student.name}! You have successfully logged in.')
-                        student_course_system(student_controller)
-                except Exception as e: print(e)
+            try: 
+                email = input('Enter your email: ')
+                if not Utils.validate_email(email): continue
+                password = getpass('Enter your password: ')
+                if not Utils.validate_password(password): continue
+                
+                student = student_controller.login_student(email, password)
+                if student:
+                    print(f'Welcome {student.name}! You have successfully logged in.')
+                    student_course_system(student_controller)
+            except Exception as e: print(e)
 
         elif choice in ['3', 'x']: 
             os.system('cls' if os.name == 'nt' else 'clear')
@@ -114,9 +118,9 @@ def student_course_system(student_controller):
             try:
                 if student_controller.verify_password(old_password):
                     new_password = getpass('Enter your new password: ')
-                    if not Utils.validate_password(new_password):
-                        print('Password must start with UPPERCASE, followed by >= 5 letters and >= 3 digits.')
-                    else: student_controller.change_student_password(new_password)
+                    if Utils.validate_password(new_password):
+                        student_controller.change_student_password(new_password)
+                else: print('Incorrect password. Please try again.')
             except Exception as e: print(e)
 
         elif choice in ['2', 'e']:
