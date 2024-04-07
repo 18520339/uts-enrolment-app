@@ -48,7 +48,7 @@ class StudentController:
         print('Password changed successfully.')
 
 
-    def enroll_random_subject(self) -> None:
+    def enroll_subject(self) -> None:
         # Enroll the student in a subject by subject ID, if not already enrolled and if enrollment limit not reached 
         # This is a simplified version without subject ID checking, assuming subject creation here for demonstration
         if self.current_student is None:
@@ -66,13 +66,13 @@ class StudentController:
         else: print('Students are allowed to enroll 4 subjects only.')
 
 
-    def remove_subject(self, subject_id: str) -> None:
+    def remove_subject_by_id(self, subject_id: str) -> None:
         # Remove a subject from the current student's enrollment
         if self.current_student is None:
             raise Exception('No student is logged in.')
 
         if len(self.current_student.subjects) >= 0:
-            if self.current_student.remove_subject(subject_id):
+            if self.current_student.remove_subject_by_id(subject_id):
                 self.database.write_student(self.current_student)
                 print(f'You are now enrolled in {len(self.current_student.subjects)}/4 subjects.')
             else: print('Subject not found in your enrollment.')
