@@ -30,8 +30,18 @@ class Subject:
         # Assigns a mark to the subject and calculates the grade based on the mark.
         if 0 <= value <= 100:
             self._mark = value
-            self._grade = Utils.calculate_grade(value)
+            self._grade = Subject.calculate_grade(value)
         else: raise ValueError('Mark must be between 0 and 100.')
+        
+    @staticmethod
+    def calculate_grade(mark: int) -> str:
+        # Calculates the grade based on the mark
+        if mark is None: return None
+        if mark < 50: return 'Z'
+        elif 50 <= mark < 65: return 'P'
+        elif 65 <= mark < 75: return 'C'
+        elif 75 <= mark < 85: return 'D'
+        return 'HD'
         
     def __str__(self):
         # Returns a string representation of the subject, useful for debugging.
