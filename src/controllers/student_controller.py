@@ -37,15 +37,6 @@ class StudentController:
                 return student
         raise Exception("Login failed. Check your email and password or register if you haven't.")
 
-
-    def verify_password(self, old_password: str) -> bool:
-        # Verify a student's login credentials
-        if self.current_student is None:
-            raise Exception('No student is logged in.')
-        if not PasswordSecurer.verify_password(self.current_student.password, old_password):
-            raise ValueError('Invalid current password. Password change failed.')
-        return True
-    
     
     def change_student_password(self, new_password: str) -> None:
         # Change the password for the current logged-in student
