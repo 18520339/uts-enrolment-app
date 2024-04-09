@@ -7,6 +7,7 @@ from models import Student
 class Database:
     def __init__(self, db_path: str = Utils.DATABASE_PATH):
         self._db_path = db_path
+        self._students: List[Student] = []
         self._check_file_exists()
     
     @property
@@ -29,32 +30,53 @@ class Database:
             return pickle.load(file)
 
 
-    def write_student(self, student: Student) -> None:
-        # Write or update a student record in the data file
-        students = self.load_students()
-        for i, existing_student in enumerate(students):
-            if existing_student.student_id == student.student_id:
-                students[i] = student
-                break
-        else: students.append(student)
-
+    def get_student_if_existed(self, student_id_or_email: str) -> Student:
+        # Check if a student record exists in the data file by student ID
+        self._students = self.load_students()
+        for student in self._students:
+            if student_id_or_email in [student.student_id, student.email]
+                return student
+        return None
+    
+    
+    def create_student(self, student: Student) -> Student:
+        # Create a new student record in the data file
+        new_student = self.get_student_if_existed(student.email)
+        if new_student is not None:
+            raise ValueError('A student with this email already exists.')
+        
+        self._students.append(student)
         with open(self.db_path, 'wb') as file:
-            pickle.dump(students, file)
-
-
-    def remove_student(self, student_id: str) -> bool:
-        # Removes a student record from the data file by student ID
-        students = self.load_students()
-        for student in students:
-            if student.student_id == student_id:
-                students.remove(student)
-                with open(self.db_path, 'wb') as file:
-                    pickle.dump(students, file)
-                return True
-        return False
+            pickle.dump(self._students, file)
+        return student
 
     
-    def clear_data(self) -> None:
+    def update_student(self, student: Student) -> Student:
+        # Write or update a student record in the data file
+        current_student = self.get_student_if_existed(student.student_id)
+        if current_student is None:
+            raise ValueError('No student found with this ID.')
+        
+        self._students.remove(current_student)
+        self._students.append(student)
+        with open(self.db_path, 'wb') as file:
+            pickle.dump(self._students, file)
+        return student
+
+
+    def remove_student_by_id(self, student_id: str) -> Student:
+        # Removes a student record from the data file by student ID
+        current_student = self.get_student_if_existed(student_id)
+        if current_student is None:
+            raise ValueError('No student found with this ID.')
+        
+        self._students.remove(current_student)
+        with open(self.db_path, 'wb') as file:
+            pickle.dump(self._students, file)
+        return current_student
+
+    
+    def clear_database(self) -> None:
         # Clears all records from the data file
         with open(self.db_path, 'wb') as file:
             pickle.dump([], file)
