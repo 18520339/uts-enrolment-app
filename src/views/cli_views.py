@@ -87,10 +87,7 @@ def student_system(student_controller):
             print('\nStudent Sign In')
             try: 
                 email = input('Enter your email: ')
-                if not Utils.validate_email(email): continue
                 password = getpass('Enter your password: ')
-                if not Utils.validate_password(password): continue
-                
                 student = student_controller.login_student(email, password)
                 if student:
                     print(f'Welcome {student.name}! You have successfully logged in.')

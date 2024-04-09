@@ -1,6 +1,6 @@
 from typing import List
 from models import Subject
-from common import Utils, Randomizer
+from common import Randomizer
 
 
 class Student:
@@ -49,7 +49,7 @@ class Student:
     def _recalculate_overall_mark(self) -> None:
         # Recalculates the student's average mark and overall grade based on the subjects enrolled.
         self._average_mark = sum(subject.mark for subject in self.subjects) / len(self.subjects) if self.subjects else 0
-        self._overall_grade = Utils.calculate_grade(self._average_mark)
+        self._overall_grade = Subject.calculate_grade(self._average_mark)
         print(f'Overall GPA recalculated. Average mark: {self._average_mark:.2f}, Grade: {self._overall_grade}')
 
 
