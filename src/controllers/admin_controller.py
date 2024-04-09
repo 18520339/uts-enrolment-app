@@ -11,7 +11,7 @@ class AdminController:
 
     def clear_database(self) -> None:
         # Clear all student records from the database
-        self.database.clear_data()
+        self.database.clear_database()
         print("Database cleared successfully.")
 
 
@@ -28,7 +28,7 @@ class AdminController:
             Utils.display_students_table(students, {'email': False, 'overall_grade': False})
 
 
-    def partition_students_performance(self) -> None:
+    def partition_students_by_pass_fail(self) -> None:
         # Partition students into PASS and FAIL based on their average marks
         students = self.database.load_students()
         pass_students, fail_students = [], []
@@ -48,7 +48,7 @@ class AdminController:
     
     def remove_student_by_id(self, student_id: str) -> None:
         # Remove a student record from the database by student ID
-        if self.database.remove_student(student_id):
+        if self.database.remove_student_by_id(student_id):
             print(f'Student with ID {student_id} has been removed.')
         else:
             print(f'No student found with ID {student_id}.')
