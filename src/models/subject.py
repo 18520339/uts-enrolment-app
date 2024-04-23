@@ -1,4 +1,4 @@
-from common import Utils, Randomizer
+from common import Randomizer
 
 class Subject:
     def __init__(self, name: str = '', mark: int = 0):

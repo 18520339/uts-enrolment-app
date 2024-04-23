@@ -34,7 +34,7 @@ class Database:
         # Check if a student record exists in the data file by student ID
         self._students = self.load_students()
         for student in self._students:
-            if student_id_or_email in [student.student_id, student.email]
+            if student_id_or_email in [student.student_id, student.email]:
                 return student
         return None
     
