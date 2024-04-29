@@ -11,7 +11,7 @@ class Student:
         self._password = password
         self._subjects: List[Subject] = []
         self._average_mark = 0
-        self._overall_grade = None # Grade will be calculated based on the mark
+        self._overall_grade = 0 # Grade will be calculated based on the mark
 
     @property # This creates an API that does not allow a value to be set
     def student_id(self):
@@ -46,19 +46,17 @@ class Student:
         self._password = new_password
 
 
-    def _recalculate_overall_mark(self) -> None:
+    def _recalculate_gpa(self) -> None:
         # Recalculates the student's average mark and overall grade based on the subjects enrolled.
         self._average_mark = sum(subject.mark for subject in self.subjects) / len(self.subjects) if self.subjects else 0
         self._overall_grade = Subject.calculate_grade(self._average_mark)
-        print(f'Overall GPA recalculated. Average mark: {self._average_mark:.2f}, Grade: {self._overall_grade}')
 
 
     def enroll_subject(self, subject: Subject) -> bool:
         # Enrolls the student in a subject if not already enrolled
         if subject not in self.subjects:
             self.subjects.append(subject)
-            print('\nEnrolled in', subject)
-            self._recalculate_overall_mark()
+            self._recalculate_gpa()
             return True
         return False
 
@@ -68,14 +66,15 @@ class Student:
         for subject in self.subjects:
             if subject.subject_id == subject_id:
                 self.subjects.remove(subject)
-                print(f'Subject with ID {subject_id} has been dropped.')
-                self._recalculate_overall_mark()
+                self._recalculate_gpa()
                 return True
         return False
 
 
     def show_enrolled_subjects(self) -> None:
-        if len(self.subjects) == 0:
-            print('No subjects enrolled.')
-            return
-        for subject in self.subjects: print(subject)
+        if len(self.subjects) == 0: return
+        for subject in self.subjects: print(f'\t\t{subject}')
+        
+        
+    def gpa_report(self) -> None:
+        return f'{self.name} :: {self.student_id} --> GRADE: {self.overall_grade:>2} - MARK: {self.average_mark:05.2f}'

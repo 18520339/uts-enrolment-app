@@ -40,44 +40,33 @@ class Database:
     
     
     def create_student(self, student: Student) -> Student:
-        # Create a new student record in the data file
-        new_student = self.get_student_if_existed(student.email)
-        if new_student is not None:
-            raise ValueError('A student with this email already exists.')
-        
+        # Create a new student record in the data file        
         self._students.append(student)
         with open(self.db_path, 'wb') as file:
             pickle.dump(self._students, file)
         return student
 
     
-    def update_student(self, student: Student) -> Student:
+    def update_student(self, student: Student) -> None:
         # Write or update a student record in the data file
         current_student = self.get_student_if_existed(student.student_id)
         if current_student is None:
-            raise ValueError('No student found with this ID.')
+            raise ValueError(f'\t\tStudent {student.student_id} does not exist')
         
-        self._students.remove(current_student)
-        self._students.append(student)
+        self._students[self._students.index(current_student)] = student
         with open(self.db_path, 'wb') as file:
             pickle.dump(self._students, file)
-        return student
 
 
-    def remove_student_by_id(self, student_id: str) -> Student:
+    def remove_student_by_id(self, student: Student) -> None:
         # Removes a student record from the data file by student ID
-        current_student = self.get_student_if_existed(student_id)
-        if current_student is None:
-            raise ValueError('No student found with this ID.')
-        
-        self._students.remove(current_student)
+        self._students.remove(student)
         with open(self.db_path, 'wb') as file:
             pickle.dump(self._students, file)
-        return current_student
 
     
     def clear_database(self) -> None:
         # Clears all records from the data file
         with open(self.db_path, 'wb') as file:
             pickle.dump([], file)
-            print('All student records have been cleared.')
+            # print('All student records have been cleared.')

@@ -37,13 +37,12 @@ class Subject:
     @staticmethod
     def calculate_grade(mark: int) -> str:
         # Calculates the grade based on the mark
-        if mark is None: return None
-        if mark < 50: return 'Z'
-        elif 50 <= mark < 65: return 'P'
-        elif 65 <= mark < 75: return 'C'
-        elif 75 <= mark < 85: return 'D'
-        return 'HD'
+        if mark >= 85: return 'HD'
+        elif mark >= 75: return 'D'
+        elif mark >= 65: return 'C'
+        elif mark >= 50: return 'P'
+        else: return 'Z'
         
     def __str__(self):
         # Returns a string representation of the subject, useful for debugging.
-        return f'Subject ID: {self.subject_id} | Name: {self.name}\t| Mark: {self.mark} | Grade: {self.grade}'
+        return f'[ Subject::{self.subject_id} -- mark = {self.mark} -- grade = {self.grade:>3} ]'
