@@ -2,141 +2,110 @@ import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from getpass import getpass
 from controllers import AdminController, StudentController
-from common import Utils
+from common import Utils, Color
 
 
 def university_system():
     os.system('cls' if os.name == 'nt' else 'clear')
     while True:
-        print('===== Welcome to the University Enrollment System =====')
-        print('1. (A)dmin | 2. (S)tudent | 3. (X) Exit')
-        choice = input('Enter your choice (1-3 or first letters): ').lower()
-
-        if choice in ['1', 'a']: 
-            admin_controller = AdminController()
-            admin_system(admin_controller)
-            
-        elif choice in ['2', 's']: 
-            student_controller = StudentController()
-            student_system(student_controller)
-
-        elif choice in ['3', 'x']: exit()
-        else: 
-            os.system('cls' if os.name == 'nt' else 'clear')
-            print('Invalid option. Please try again.')
+        choice = input(Color.make_cyan('University System: (A)dmin, (S)tudent, or X : ')).strip().upper()
+        if choice == 'A': admin_system(AdminController())
+        elif choice == 'S': student_system(StudentController())
+        elif choice == 'X': 
+            print(Color.make_yellow('Thank You'))
+            exit()
+        else: print(Color.make_red('Invalid option. Please try again'))
 
 
 def admin_system(admin_controller):
     while True:
-        print('\n<BACK|===== Admin System =====|')
-        print('1. (C)lear all student data')
-        print('2. (G)roup students by grade')
-        print('3. (P)artition students by performance')
-        print('4. (R)emove a student by ID')
-        print('5. (S)how all registered students')
-        print('6. (X) Logout and back to University System')
-
-        choice = input('Enter your choice (1-6 or first letters): ').lower()
-        if choice in ['1', 'c']: 
-            admin_controller.clear_database()
-            
-        elif choice in ['2', 'g']: 
-            admin_controller.group_students_by_grade()
-            
-        elif choice in ['3', 'p']: 
-            admin_controller.partition_students_performance()
-        
-        elif choice in ['4', 'r']:
-            student_id = input('\nEnter the student ID to remove: ')
-            admin_controller.remove_student_by_id(student_id)
-            
-        elif choice in ['5', 's']: 
-            admin_controller.show_registered_students()
-        
-        elif choice in ['6', 'x']:
-            confirm = input('Are you sure you want to logout? (y/n): ').lower()
-            if confirm in ['', 'y', 'yes']: 
-                os.system('cls' if os.name == 'nt' else 'clear')
-                break
-            
-        else: print('Invalid option. Please try again.')
+        choice = input(Color.make_cyan('\tAdmin System (c/g/p/r/s/x): ')).strip().lower()
+        if choice == 'c': 
+            print(Color.make_yellow('\tClearing students database'))
+            confirm = input(Color.make_red('\tAre you sure want to clear the database (Y)ES/(N)O: ')).strip().upper()
+            if confirm in ['Y', 'YES']: admin_controller.clear_database()
+                
+        elif choice == 'g': admin_controller.group_students_by_grade()
+        elif choice == 'p': admin_controller.partition_students_by_pass_fail()
+        elif choice == 'r': admin_controller.remove_student_by_id(input('\tRemove by ID: ').strip())
+        elif choice == 's': admin_controller.show_registered_students()
+        elif choice == 'x': break
+        else: print(Color.make_red('\tInvalid option. Please try again'))
             
 
 def student_system(student_controller):
     while True:
-        print('\n<BACK|===== Student System =====|')
-        print('1. (R)egister | 2. (L)ogin | 3. (X) Exit')
-        choice = input('Enter your choice (1-3 or first letters): ').lower()
+        choice = input(Color.make_cyan('\tStudent System (l/r/x): ')).strip().lower()
+                
+        if choice == 'r':
+            print(Color.make_green('\tStudent Sign Up'))
+            while True:
+                email = input('\tEmail: ').strip().lower()
+                password = input('\tPassword: ')
+                try: 
+                    if Utils.validate_email(email) and Utils.validate_password(password):
+                        print(Color.make_yellow('\temail and password formats acceptable.'))
+                        student = student_controller.register_student(email, password)
+                        if student: 
+                            print(Color.make_yellow(f'\tEnrolling Student {student.name}'))
+                            break
+                    else: print(Color.make_red('\tInvalid email or password format'))
+                except Exception as e: 
+                    print(Color.make_red(e))
+                    break
+            
+        elif choice == 'l':
+            print(Color.make_green('\tStudent Sign In'))
+            while True:
+                email = input('\tEmail: ').strip().lower()
+                password = input('\tPassword: ')
+                try: 
+                    if Utils.validate_email(email) and Utils.validate_password(password):
+                        print(Color.make_yellow('\temail and password formats acceptable.'))
+                        student = student_controller.login_student(email, password)
+                        if student: 
+                            student_course_system(student_controller)
+                            break
+                    else: print(Color.make_red('\tInvalid email or password format'))
+                except Exception as e: 
+                    print(Color.make_red(e))
+                    break
 
-        if choice in ['1', 'r']:
-            print('\nStudent Sign Up')
-            name = input('Enter your name: ')
-            try: 
-                email = input('Enter your email: ')
-                if not Utils.validate_email(email): continue
-                password = getpass('Enter your password: ')
-                if not Utils.validate_password(password): continue
-                    
-                student = student_controller.register_student(name, email, password)
-                if student: print(f'Student {student.name} registered successfully with ID {student.student_id}.')
-            except Exception as e: print(e)
-       
-        elif choice in ['2', 'l']:
-            print('\nStudent Sign In')
-            try: 
-                email = input('Enter your email: ')
-                password = getpass('Enter your password: ')
-                student = student_controller.login_student(email, password)
-                if student:
-                    print(f'Welcome {student.name}! You have successfully logged in.')
-                    student_course_system(student_controller)
-            except Exception as e: print(e)
-
-        elif choice in ['3', 'x']: 
-            os.system('cls' if os.name == 'nt' else 'clear')
-            break
-        else: print('Invalid option. Please try again.')
+        elif choice == 'x': break
+        else: print(Color.make_red('\tInvalid option. Please try again'))
 
 
 def student_course_system(student_controller):
     while True:
-        print('\n<BACK|===== Student Course System =====|')
-        print('1. (C)hange password')
-        print('2. (E)nroll in a subject')
-        print('3. (R)emove a subject')
-        print('4. (S)how all enrolled subjects')
-        print('5. (X) Logout and back to Student System')
-        choice = input('Enter your choice (1-5 or first letters): ').lower()
-
-        if choice in ['1', 'c']:
-            old_password = getpass('\nEnter your old password: ')
-            try:
-                if student_controller.verify_password(old_password):
-                    new_password = getpass('Enter your new password: ')
+        choice = input(Color.make_cyan('\t\tStudent Course Menu (c/e/r/s/x): ')).strip().lower()
+        
+        if choice == 'c':
+            print(Color.make_yellow('\t\tUpdating Password'))
+            new_password = input('\t\tNew Password: ')
+            
+            while True:
+                confirm_password = input('\t\tConfirm Password: ')
+                if new_password != confirm_password:
+                    print(Color.make_red('\t\tPasswords does not match - try again'))
+                    continue
+            
+                try: 
                     if Utils.validate_password(new_password):
                         student_controller.change_student_password(new_password)
-                else: print('Incorrect password. Please try again.')
-            except Exception as e: print(e)
+                        break
+                    else: print(Color.make_red('\t\tInvalid password format'))  
+                except Exception as e: 
+                    print(Color.make_red(e))
+                    break
 
-        elif choice in ['2', 'e']:
-            student_controller.enroll_random_subject()
-
-        elif choice in ['3', 'r']:
-            subject_id = input('\nEnter subject ID to remove: ')
-            student_controller.remove_subject(subject_id)
-
-        elif choice in ['4', 's']:
-            student_controller.show_enrolled_subjects()
-
-        elif choice in ['5', 'x']: 
-            confirm = input('Are you sure you want to logout? (y/n):').lower() 
-            if confirm in ['', 'y', 'yes']:
-                os.system('cls' if os.name == 'nt' else 'clear')
-                student_controller.logout_student()
-                break
-        else: print('Invalid option. Please try again.')
+        elif choice == 'e': student_controller.enroll_subject()
+        elif choice == 'r': student_controller.remove_subject_by_id(input('\t\tRemove by ID: ').strip())
+        elif choice == 's': student_controller.show_enrolled_subjects()
+        elif choice == 'x': 
+            student_controller.logout_student()
+            break
+        else: print(Color.make_red('\t\tInvalid option. Please try again'))
 
 
 if __name__ == '__main__':
