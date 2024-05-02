@@ -4,6 +4,7 @@ from typing import List
 from common import Utils
 from models import Student
 
+
 class Database:
     def __init__(self, db_path: str = Utils.DATABASE_PATH):
         self._db_path = db_path
