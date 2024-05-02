@@ -23,6 +23,13 @@ class Utils:
         return False
     
     
+    @staticmethod
+    def center_tk_window(window, width=500, height=300) -> None:
+        center_x = window.winfo_screenwidth() // 2 - width // 2
+        center_y = window.winfo_screenheight() // 2 - height // 2 - 25 # 25 for the title bar
+        window.geometry(f'{width}x{height}+{center_x}+{center_y}')
+    
+    
 class Color:
     
     @staticmethod
