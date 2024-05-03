@@ -1,6 +1,8 @@
 import os
 import re
 import random
+import tkinter as tk
+from tkinter import ttk
 
 
 class Utils:
@@ -28,6 +30,37 @@ class Utils:
         center_x = window.winfo_screenwidth() // 2 - width // 2
         center_y = window.winfo_screenheight() // 2 - height // 2 - 25 # 25 for the title bar
         window.geometry(f'{width}x{height}+{center_x}+{center_y}')
+        
+        
+    @staticmethod
+    def render_tk_treeview(root, height=10):
+        # Styling for Treeview
+        style = ttk.Style()
+        style.theme_use('clam')
+        style.configure('Treeview', rowheight=25, background='white', fieldbackground='white', font=('Century Gothic', 12))
+        style.map('Treeview', background=[('selected', 'dodgerblue')])
+        
+        # Treeview Frame
+        frame = tk.Frame(root, bg='beige')
+        frame.pack(fill='both', expand=True, padx=30)
+        
+        # Treeview for subjects
+        tree = ttk.Treeview(frame, columns=('Sub. ID', 'Name', 'Mark', 'Grade'), show='headings', height=height)
+        tree.heading('Sub. ID', text='Sub. ID')
+        tree.heading('Name', text='Name')
+        tree.heading('Mark', text='Mark')
+        tree.heading('Grade', text='Grade')
+        tree.column('Sub. ID', anchor='center', width=50)
+        tree.column('Name', anchor='w', width=250)
+        tree.column('Mark', anchor='center', width=50)
+        tree.column('Grade', anchor='center', width=50)
+        tree.pack(side='left', fill='both', expand=True)
+
+        # Scrollbar for the Treeview
+        scrollbar = ttk.Scrollbar(frame, orient='vertical', command=tree.yview)
+        scrollbar.pack(side='right', fill='y')
+        tree.configure(yscrollcommand=scrollbar.set)
+        return tree
     
     
 class Color:
