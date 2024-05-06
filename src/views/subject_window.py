@@ -1,3 +1,4 @@
+import tkmacosx
 import tkinter as tk
 from tkinter import font as tkfont, messagebox
 from common import Utils
@@ -25,10 +26,10 @@ class SubjectsWindow:
         buttons_frame = tk.Frame(self.root, bg='white')
         buttons_frame.pack(padx=20, fill='x', expand=True)
 
-        tk.Button(buttons_frame, text='Refresh List', command=self.load_subjects, relief='flat', 
+        tkmacosx.Button(buttons_frame, text='Refresh List', command=self.load_subjects, relief='flat', 
                   font=button_font, bg='#80cbc4', fg='white', padx=10).pack(side='left', padx=10)
         
-        tk.Button(buttons_frame, text='Remove Selected', command=self.remove_subjects, relief='flat', 
+        tkmacosx.Button(buttons_frame, text='Remove Selected', command=self.remove_subjects, relief='flat', 
                   font=button_font, bg='#ef5350', fg='white', padx=10).pack(side='left', padx=10)
         
 
