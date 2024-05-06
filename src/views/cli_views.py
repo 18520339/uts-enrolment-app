@@ -83,21 +83,18 @@ def student_course_system(student_controller):
         if choice == 'c':
             print(Color.make_yellow('\t\tUpdating Password'))
             new_password = input('\t\tNew Password: ')
-            
+            if not Utils.validate_password(new_password):
+                print(Color.make_red('\t\tInvalid password format'))
+                continue
+
             while True:
                 confirm_password = input('\t\tConfirm Password: ')
                 if new_password != confirm_password:
                     print(Color.make_red('\t\tPasswords does not match - try again'))
                     continue
-            
-                try: 
-                    if Utils.validate_password(new_password):
-                        student_controller.change_student_password(new_password)
-                        break
-                    else: print(Color.make_red('\t\tInvalid password format'))  
-                except Exception as e: 
-                    print(Color.make_red(e))
-                    break
+                try: student_controller.change_student_password(new_password)
+                except Exception as e: print(Color.make_red(e))
+                break
 
         elif choice == 'e': student_controller.enroll_subject()
         elif choice == 'r': student_controller.remove_subject_by_id(input('\t\tRemove by ID: ').strip())
