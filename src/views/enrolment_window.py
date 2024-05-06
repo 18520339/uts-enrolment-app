@@ -37,19 +37,19 @@ class EnrolmentWindow:
             
         # Button Panel
         buttons_frame = tk.Frame(self.root, bg='white')
-        buttons_frame.pack(padx=20, fill='x', expand=True)
+        buttons_frame.pack(padx=30, fill='x', expand=True)
 
         tkmacosx.Button(buttons_frame, text='Enroll', command=self.enroll_subjects, relief='flat', 
-                  font=button_font, bg='#29b6f6', fg='white', padx=5).pack(side='left', padx=5)
+                  font=button_font, bg='#29b6f6', fg='white', padx=0, pady=5).pack(side='left', padx=3)
 
         tkmacosx.Button(buttons_frame, text='Clear', command=self.clear_selections, relief='flat',
-                  font=button_font, bg='#ef5350', fg='white', padx=5).pack(side='left', padx=5)
+                  font=button_font, bg='#ef5350', fg='white', padx=0, pady=5).pack(side='left', padx=3)
 
         tkmacosx.Button(buttons_frame, text='View Enrolled', command=self.open_subjects_window, relief='flat',
-                  font=button_font, bg='#ab47bc', fg='white', padx=5).pack(side='left', padx=5)
+                  font=button_font, bg='#ab47bc', fg='white', padx=10, pady=5).pack(side='left', padx=3)
 
         tkmacosx.Button(buttons_frame, text='Logout', command=self.logout, relief='flat',
-                  font=button_font, bg='#26a69a', fg='white', padx=5).pack(side='left', padx=5)
+                  font=button_font, bg='#26a69a', fg='white', padx=5, pady=5).pack(side='left', padx=3)
 
 
     def enroll_subjects(self):

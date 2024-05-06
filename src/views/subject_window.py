@@ -24,13 +24,13 @@ class SubjectsWindow:
     
         # Button Panel
         buttons_frame = tk.Frame(self.root, bg='white')
-        buttons_frame.pack(padx=20, fill='x', expand=True)
+        buttons_frame.pack(padx=30, fill='x', expand=True)
 
         tkmacosx.Button(buttons_frame, text='Refresh List', command=self.load_subjects, relief='flat', 
-                  font=button_font, bg='#80cbc4', fg='white', padx=10).pack(side='left', padx=10)
+                  font=button_font, bg='#26a69a', fg='white', padx=10, pady=5).pack(side='left', padx=3)
         
         tkmacosx.Button(buttons_frame, text='Remove Selected', command=self.remove_subjects, relief='flat', 
-                  font=button_font, bg='#ef5350', fg='white', padx=10).pack(side='left', padx=10)
+                  font=button_font, bg='#ef5350', fg='white', padx=10, pady=5).pack(side='left', padx=3)
         
 
     def load_subjects(self):

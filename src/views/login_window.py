@@ -33,17 +33,17 @@ class LoginWindow:
 
         # Email and Password entries with decorative elements
         tk.Label(form_frame, text='Email:', font=label_font, bg='beige', fg='red').grid(row=0, column=0, padx=(20, 10), pady=(20, 5), sticky='w')
-        self.email_entry = tk.Entry(form_frame, width=35, font=entry_font, bd=2, bg='white', fg='black')
+        self.email_entry = tk.Entry(form_frame, width=35, font=entry_font, bg='white', fg='black')
         self.email_entry.grid(row=0, column=1, padx=(0, 20), pady=(20, 5), sticky='e')
         self.email_entry.focus_set()
 
         tk.Label(form_frame, text='Password:', font=label_font, bg='beige', fg='red').grid(row=1, column=0, padx=(20, 10), pady=10, sticky='w')
-        self.password_entry = tk.Entry(form_frame, show='*', width=35, font=entry_font, bd=2, bg='white', fg='black')
+        self.password_entry = tk.Entry(form_frame, show='*', width=35, font=entry_font, bg='white', fg='black')
         self.password_entry.grid(row=1, column=1, padx=(0, 20), pady=5, sticky='e')
 
         tkmacosx.Button(
             form_frame, text='Login', command=self.login, relief='flat', font=label_font, bg='dodgerblue', fg='white'
-        ).grid(row=2, column=1, columnspan=1, padx=20, pady=10, ipadx=30, ipady=2, sticky='e')
+        ).grid(row=2, column=1, columnspan=1, padx=20, pady=10, ipadx=30, ipady=5, sticky='e')
         
         
     def login(self):
