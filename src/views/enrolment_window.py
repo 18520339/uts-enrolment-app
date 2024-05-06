@@ -1,3 +1,4 @@
+import tkmacosx
 import tkinter as tk
 from tkinter import font as tkfont, messagebox
 
@@ -27,26 +28,28 @@ class EnrolmentWindow:
 
         # Populate tree with subjects
         self.available_subjects = {}
+        subject_names = [subject.name for subject in self.student_controller.current_student.subjects]
         for _ in range(15):
             subject = Subject(name=Randomizer.generate_subject_name())
-            self.available_subjects[subject.subject_id] = subject
-            self.tree.insert('', 'end', values=(subject.subject_id, subject.name, subject.mark, subject.grade))
+            if subject.name not in subject_names:
+                self.available_subjects[subject.subject_id] = subject
+                self.tree.insert('', 'end', values=(subject.subject_id, subject.name, subject.mark, subject.grade))
             
         # Button Panel
         buttons_frame = tk.Frame(self.root, bg='white')
-        buttons_frame.pack(padx=30, fill='x', expand=True)
+        buttons_frame.pack(padx=20, fill='x', expand=True)
 
-        tk.Button(buttons_frame, text='Enroll', command=self.enroll_subjects, relief='flat', 
-                  font=button_font, bg='#29b6f6', fg='white', padx=10).pack(side='left', padx=10)
+        tkmacosx.Button(buttons_frame, text='Enroll', command=self.enroll_subjects, relief='flat', 
+                  font=button_font, bg='#29b6f6', fg='white', padx=5).pack(side='left', padx=5)
 
-        tk.Button(buttons_frame, text='Clear', command=self.clear_selections, relief='flat',
-                  font=button_font, bg='#ef5350', fg='white', padx=10).pack(side='left', padx=10)
+        tkmacosx.Button(buttons_frame, text='Clear', command=self.clear_selections, relief='flat',
+                  font=button_font, bg='#ef5350', fg='white', padx=5).pack(side='left', padx=5)
 
-        tk.Button(buttons_frame, text='View Enrolled', command=self.open_subjects_window, relief='flat',
-                  font=button_font, bg='#ab47bc', fg='white', padx=10).pack(side='left', padx=10)
+        tkmacosx.Button(buttons_frame, text='View Enrolled', command=self.open_subjects_window, relief='flat',
+                  font=button_font, bg='#ab47bc', fg='white', padx=5).pack(side='left', padx=5)
 
-        tk.Button(buttons_frame, text='Logout', command=self.logout, relief='flat',
-                  font=button_font, bg='#26a69a', fg='white', padx=10).pack(side='left', padx=10)
+        tkmacosx.Button(buttons_frame, text='Logout', command=self.logout, relief='flat',
+                  font=button_font, bg='#26a69a', fg='white', padx=5).pack(side='left', padx=5)
 
 
     def enroll_subjects(self):
@@ -60,8 +63,14 @@ class EnrolmentWindow:
             for row in selected_rows:
                 subject_details = self.tree.item(row, 'values')
                 subject_to_enroll = self.available_subjects[subject_details[0]]
-                self.student_controller.current_student.enroll_subject(subject_to_enroll)
                 enrolled_details_str += str(subject_to_enroll) + '\n'
+                
+                if subject_to_enroll in self.student_controller.current_student.subjects:
+                    ExceptionWindow(
+                        self.root, 'Enrollment Failed', 
+                        f'You are already enrolled subject {subject_to_enroll.subject_id}', 'error')
+                    continue
+                self.student_controller.current_student.enroll_subject(subject_to_enroll)
                 
             if self.subjects_window and self.subjects_root.winfo_exists(): self.subjects_window.load_subjects()
             self.clear_selections()
@@ -69,7 +78,7 @@ class EnrolmentWindow:
                 'Enrollment Successful', 
                 f'You are now enrolled in {len(self.student_controller.current_student.subjects)} ' 
                 f'out of 4 subjects:\n{enrolled_details_str}')
-        else: ExceptionWindow(self.root, 'Enrollment Failed', 'Students are allowed to enrol in 4 subjects only', 'error')
+        else: ExceptionWindow(self.root, 'Enrollment Failed', 'You are allowed to enrol in 4 subjects only', 'error')
 
 
     def clear_selections(self):
