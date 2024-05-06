@@ -1,3 +1,4 @@
+import tkmacosx
 import tkinter as tk
 from tkinter import font as tkfont, Toplevel
 from common import Utils
@@ -8,6 +9,7 @@ class ExceptionWindow:
         self.root = Toplevel(parent)
         self.root.title(message_type.title())
         self.root.resizable(False, False)
+        self.root.bind('<Return>', lambda e: self.root.destroy())
         Utils.center_tk_window(self.root, 400, 200)
 
         # This makes the window block other windows until it is closed
@@ -36,13 +38,13 @@ class ExceptionWindow:
         tk.Label(header_frame, text=f'{title}!', font=title_font, bg=bg_color, fg=title_color).pack(side='left', padx=10)
 
         message_frame = tk.Frame(self.root, bg=bg_color)
-        message_frame.pack(fill='both', padx=20, pady=5, expand=True)
+        message_frame.pack(fill='both', padx=10, pady=5, expand=True)
         tk.Label(message_frame, text=message, font=message_font, wraplength=350, justify='left', bg=bg_color, fg='grey').pack()
 
         # OK Button to close the dialog
         button_frame = tk.Frame(self.root, bg=bg_color)
         button_frame.pack(fill='x', padx=40, pady=20, expand=True)
-        tk.Button(button_frame, text='OK', command=self.root.destroy, font=message_font, relief='flat', bg=title_color, fg='white', padx=30, pady=5).pack()
+        tkmacosx.Button(button_frame, text='OK', command=self.root.destroy, font=message_font, relief='flat', bg=title_color, fg='white', padx=30, pady=5).pack()
 
         # Ensures the parent cannot be interacted with until this window is closed
         self.root.protocol('WM_DELETE_WINDOW', self.root.destroy) # Ensure it closes properly
