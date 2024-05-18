@@ -12,6 +12,7 @@ class AdminController:
     def clear_database(self) -> None:
         # Clear all student records from the database
         self.database.clear_database()
+        print(Color.make_yellow('\tStudents data cleared'))
 
 
     def group_students_by_grade(self) -> None:
@@ -55,7 +56,7 @@ class AdminController:
             return
         
         print(Color.make_yellow(f'\tRemoving Student {student_id} Account'))
-        self.database.remove_student(current_student)
+        self.database.remove_student_by_id(current_student)
 
 
     def show_registered_students(self) -> None:
