@@ -7,11 +7,22 @@ A local university wants to develop a new interactive system that allows student
 - Create a UML Use-Case diagram and explain in detail the goals, actors, cases and their relationships in the diagram.
 - Create a UML Class Diagram and explain the classes, their properties, and their relationships in detail. 
 
-**(Part 2)** Develop and implement the application based on the requirement analysis, modelling and design completed in **Part 1**. The application is composed of a CLI application and an optional GUI implementation for that app. 
+**(Part 2)** Develop and implement the application based on the requirement analysis, modelling and design completed in **Part 1**. The application is composed of a `CLI` application and an optional `GUI` implementation for that app. 
 
 **(Part 3)** This is the assessment formal showcase. Each team will present their **Part 2** working application based on their collaborative **Part 1** design.
 
 ***NOTE**: The enrolment is only for 1 semester at a time. Hence, the choice of multiple semester enrolment is outside the application scope.
+
+## How to Run
+
+1. For `CLI` app: `python src/views/cli_views.py`
+
+2. For `GUI` app:
+
+  ```bash
+  pip install tkmacosx
+  python src/views/login_window.py
+  ```
 
 ## System Menu Requirements
 
