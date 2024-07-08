@@ -3,9 +3,9 @@ import tkinter as tk
 from tkinter import font as tkfont, messagebox
 
 from models import Subject
-from common import Utils, Randomizer
 from subject_window import SubjectsWindow
 from exception_window import ExceptionWindow
+from common import Randomizer, ScreenDisplayer
 
 
 class EnrolmentWindow:
@@ -16,7 +16,7 @@ class EnrolmentWindow:
         self.subjects_root = None 
         self.subjects_window = None
         self.student_controller = student_controller
-        Utils.center_tk_window(self.root, 500, 500)
+        ScreenDisplayer.center_tk_window(self.root, 500, 500)
         
         # Custom fonts
         title_font = tkfont.Font(family='Century Gothic', size=23, weight='bold', slant='italic')
@@ -24,7 +24,7 @@ class EnrolmentWindow:
         
         # Title and Treeview
         tk.Label(self.root, text='Select Your Subjects', font=title_font, bg='#fefefe', fg='#00796b').pack(pady=20)
-        self.tree = Utils.render_tk_treeview(self.root)
+        self.tree = ScreenDisplayer.render_tk_treeview(self.root)
 
         # Populate tree with subjects
         self.available_subjects = {}
@@ -77,7 +77,7 @@ class EnrolmentWindow:
             messagebox.showinfo(
                 'Enrollment Successful', 
                 f'You are now enrolled in {len(self.student_controller.current_student.subjects)} ' 
-                f'out of 4 subjects:\n{enrolled_details_str}')
+                'out of 4 subjects:\n' + enrolled_details_str.replace('\t', ' '))
         else: ExceptionWindow(self.root, 'Enrollment Failed', 'You are allowed to enrol in 4 subjects only', 'error')
 
 

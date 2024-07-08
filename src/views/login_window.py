@@ -5,9 +5,10 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import tkmacosx
 import tkinter as tk
 from tkinter import font as tkfont
-from common import Utils
+
 from controllers import StudentController
 from exception_window import ExceptionWindow
+from common import Validator, ScreenDisplayer
 
 
 class LoginWindow:
@@ -19,7 +20,7 @@ class LoginWindow:
 
         self.root.bind('<Return>', lambda e: self.login())
         self.student_controller = StudentController()
-        Utils.center_tk_window(self.root)
+        ScreenDisplayer.center_tk_window(self.root)
 
         # Custom fonts
         title_font = tkfont.Font(family='Century Gothic', size=23, weight='bold')
@@ -35,11 +36,13 @@ class LoginWindow:
         tk.Label(form_frame, text='Email:', font=label_font, bg='beige', fg='red').grid(row=0, column=0, padx=(20, 10), pady=(20, 5), sticky='w')
         self.email_entry = tk.Entry(form_frame, width=35, font=entry_font, bg='white', fg='black')
         self.email_entry.grid(row=0, column=1, padx=(0, 20), pady=(20, 5), sticky='e')
+        self.email_entry.insert(0, 'quan.dang@university.com') # Default email for testing
         self.email_entry.focus_set()
 
         tk.Label(form_frame, text='Password:', font=label_font, bg='beige', fg='red').grid(row=1, column=0, padx=(20, 10), pady=10, sticky='w')
         self.password_entry = tk.Entry(form_frame, show='*', width=35, font=entry_font, bg='white', fg='black')
         self.password_entry.grid(row=1, column=1, padx=(0, 20), pady=5, sticky='e')
+        self.password_entry.insert(0, 'Helloworld123') # Default password for testing
 
         tkmacosx.Button(
             form_frame, text='Login', command=self.login, relief='flat', font=label_font, bg='dodgerblue', fg='white'
@@ -53,9 +56,8 @@ class LoginWindow:
             ExceptionWindow(self.root, 'Error', 'Please enter both email and password', 'error')
             return
         
-        # quan.dang@university.com -- Helloworld123
         try:
-            if Utils.validate_email(email) and Utils.validate_password(password):
+            if Validator.validate_email(email) and Validator.validate_password(password):
                 student = self.student_controller.login_student(email, password)
                 if student:
                     ExceptionWindow(self.root, 'Login Successful', f'Welcome back, {student.name}!', 'info')

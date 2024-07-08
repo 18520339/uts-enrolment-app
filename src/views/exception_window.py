@@ -1,7 +1,7 @@
 import tkmacosx
 import tkinter as tk
 from tkinter import font as tkfont, Toplevel
-from common import Utils
+from common import ScreenDisplayer
 
 
 class ExceptionWindow:
@@ -10,7 +10,7 @@ class ExceptionWindow:
         self.root.title(message_type.title())
         self.root.resizable(False, False)
         self.root.bind('<Return>', lambda e: self.root.destroy())
-        Utils.center_tk_window(self.root, 400, 200)
+        ScreenDisplayer.center_tk_window(self.root, 400, 200)
 
         # This makes the window block other windows until it is closed
         self.root.transient(parent)

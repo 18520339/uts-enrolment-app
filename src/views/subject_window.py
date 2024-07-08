@@ -1,7 +1,7 @@
 import tkmacosx
 import tkinter as tk
 from tkinter import font as tkfont, messagebox
-from common import Utils
+from common import ScreenDisplayer
 from exception_window import ExceptionWindow
 
 
@@ -19,7 +19,7 @@ class SubjectsWindow:
         
         # Title and Treeview Frame
         tk.Label(self.root, text="Your Enrolled Subjects", bg='white', fg='#00796b', font=title_font).pack(pady=10)
-        self.tree = Utils.render_tk_treeview(self.root, height=4)
+        self.tree = ScreenDisplayer.render_tk_treeview(self.root, height=4)
         self.load_subjects()
     
         # Button Panel
@@ -58,5 +58,5 @@ class SubjectsWindow:
         messagebox.showinfo(
             'Remove Successful', 
             f'You are now enrolled in {len(self.student_controller.current_student.subjects)} ' 
-            f'out of 4 subjects:\n{removed_details_str}')
+            'out of 4 subjects:\n' + removed_details_str.replace('\t', ' '))
         
