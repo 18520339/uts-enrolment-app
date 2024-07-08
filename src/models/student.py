@@ -10,7 +10,7 @@ class Student:
         self._email = email.lower()
         self._password = password
         self._subjects: List[Subject] = []
-        self._average_mark = 25 # Default GPA if students haven't enrolled any subjects
+        self._average_mark = 0 # Default GPA if students haven't enrolled any subjects
         self._overall_grade = 'Z' # Grade will be calculated based on the mark
 
     @property # This creates an API that does not allow a value to be set

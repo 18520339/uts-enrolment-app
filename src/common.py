@@ -7,7 +7,7 @@ from tkinter import ttk
 
 class Utils:
     DATABASE_PATH = os.path.join(os.path.dirname(__file__), 'students.data')
-    EMAIL_PATTERN = r'^[a-zA-Z0-9]+.[a-zA-Z0-9]+@university\.com$'
+    EMAIL_PATTERN = r'^[a-zA-Z0-9]+\.[a-zA-Z0-9]+@university\.com$'
     PASSWORD_PATTERN = r'^[A-Z][a-zA-Z]{5,}\d{3,}$'
 
     @staticmethod
