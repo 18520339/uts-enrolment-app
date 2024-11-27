@@ -1,23 +1,23 @@
 # Software Development for UTS Enrolment Application
 
-A local university wants to develop a new interactive system that allows students to self-enroll in semester subjects. Your team is expected to develop the application in 2 parts, **Part 1** and **Part 2**, then demonstrate the result to the stakeholders in **Part 3**:
+A local university wants to develop a new interactive system that allows students to self-enroll in semester subjects. Your team is expected to develop the application in 2 parts, [**Part 1**](#part-1-requirements-analysis) and [**Part 2**](#part-2-software-development), then demonstrate the result to the stakeholders in **Part 3**:
 
-**(Part 1)** Complete and deliver a comprehensive software requirements analysis report, which includes: 
-- Transform the requirements into User-Stories and map the User-Stories to a requirements table (or backlog).
-- Create a UML Use-Case diagram and explain in detail the goals, actors, cases and their relationships in the diagram.
-- Create a UML Class Diagram and explain the classes, their properties, and their relationships in detail. 
+[**(Part 1)**](#part-1-requirements-analysis) Complete and deliver a comprehensive software requirements analysis report, which includes: 
+- Transform the requirements into [User-Stories](#i-user-story-table-backlog) and map the [User-Stories](#i-user-story-table-backlog) to a requirements table (or backlog).
+- Create a [Use-Case diagram](#ii-use-case-and-uml-class-diagrams) and explain in detail the goals, actors, cases and their relationships in the diagram.
+- Create a [UML Class Diagram](#ii-use-case-and-uml-class-diagrams) and explain the classes, their properties, and their relationships in detail. 
 
-**(Part 2)** Develop and implement the application based on the requirement analysis, modelling and design completed in **Part 1**. The application is composed of a `CLI` application and an optional `GUI` implementation for that app. 
+[**(Part 2)**](#part-2-software-development) Develop and implement the application based on the requirement analysis, modelling and design completed in [**Part 1**](#part-1-requirements-analysis). The application is composed of a [CLI](#ii-sample-io) application and an optional [GUI](#iii-case-study-gui-implementation-optional) implementation for that app. 
 
-**(Part 3)** This is the assessment formal showcase. Each team will present their **Part 2** working application based on their collaborative **Part 1** design.
+**(Part 3)** This is the assessment formal showcase. Each team will present their [**Part 2**](#part-2-software-development) working application based on their collaborative [**Part 1**](#part-1-requirements-analysis) design.
 
 ***NOTE**: The enrolment is only for 1 semester at a time. Hence, the choice of multiple semester enrolment is outside the application scope.
 
 ## How to Run
 
-1. For `CLI` app: `python src/views/cli_views.py`
+1. For [CLI](#ii-sample-io) app: `python src/views/cli_views.py`
 
-2. For `GUI` app:
+2. For [GUI](#iii-case-study-gui-implementation-optional) app:
 
   ```bash
   pip install tkmacosx
@@ -34,7 +34,7 @@ The university is requesting a CLI application called **CLIUniApp** offering acc
 
 - The university menu system should enable users to choose to go the Admin or Student Menu: **(A) Admin**, **(S) Student**, **(x) Exit**.
 - **CLIUniApp** stores students' data in a local file, `students.data`. 
-- All **CLIUniApp** CRUD operations should be operated with this storage file `students.data`. 
+- All **CRUD** operations should be operated with this storage file `students.data`. 
 
 | Entity       | Criteria                                              | 
 |--------------|-------------------------------------------------------|
@@ -157,7 +157,7 @@ Admins are existing university staff and do not need to register. Admins can sim
 
 ## Part 1: Requirements Analysis
 
-### I. User-Story Table (Backlog)
+### I. [User-Story Table (Backlog)](./backlog.xlsx)
 
 Your team is expected to read thoroughly the customer (university) requirements and transform the requirements into User-Story. The User-Story should be simple so that each story is later translated into a function (or action). 
 
@@ -173,15 +173,23 @@ Each story will have a unique 3-digit ID. If a group of stories is related to th
 - Story: show an error message if credentials do not match -> 106
 - Story: take student to student sub-menu if credentials are correct -> 100
 
-=> The refined User-Stories should be mapped into a requirements table (or backlog) formatted as follows:
+<details>
+  <summary>The refined User-Stories are mapped into a requirements table, which is save in the <a href="./backlog.xlsx">backlog.xlsx</a>.</summary>
 
 | ID                              | User                                   | Action                       | Result                              | Function        |
 |---------------------------------|----------------------------------------|------------------------------|-------------------------------------|-----------------|
 | A unique 3 digits user story ID | The person or entity taking the action | The action taken by the user | The result or outcome of the action | The action name |
 
-### II. UML Use-Case and UML Class Diagrams
+![](./imgs/backlog.png)
 
-- **UML Use-Case diagram**: Identify the actors, the goals, the case, and their relationships. 
+</details>
+
+### II. Use-Case and UML Class Diagrams
+
+<details>
+  <summary><b>1. Use-Case diagram</b></summary>
+
+> Identify the actors, the goals, the case, and their relationships. 
 
 | Entity                  | Criteria                                                 | 
 |-------------------------|----------------------------------------------------------|
@@ -191,7 +199,14 @@ Each story will have a unique 3-digit ID. If a group of stories is related to th
 | Case relationships      | Accurate and consistent case relationships               | 
 | Labelling               | Use of correct relationship labeling                     | 
 
-- **UML Class diagram**: Identify the classes, fields, methods, visibility, multiplicity, and their relationships.
+![](./imgs/use_case_diagram.png)
+
+</details>
+
+<details>
+  <summary><b>2. UML Class diagram</b></summary>
+
+> Identify the classes, fields, methods, visibility, multiplicity, and their relationships.
 
 | Entity        | Criteria                                        | 
 |---------------|-------------------------------------------------|
@@ -203,17 +218,21 @@ Each story will have a unique 3-digit ID. If a group of stories is related to th
 
 Please provide explanations for each actor, goal, case, relationship. Ensure that your diagram is consistent and aligned with the provided explanations about all involved entities.
 
+![](./imgs/uml_class_diagram.png)
+
+</details>
+
 ## Part 2: Software Development
 
 > Feel free to add more classes following the class diagram in **Part 1**. 
 
 ### I. Sample Model Classes
 
-The program model has at least 3 classes: `Student`, `Subject`, and `Database`. These classes are responsible for storing the program data and for supplying the program controllers (see section 4) with functionalities and data. You may add more classes based on Part 1 design.
+The program model has at least **3 classes**: [`Student`](./src/models/student.py), [`Subject`](./src/models/subject.py), and [`Database`](./src/models/database.py). These classes are responsible for storing the program data and for supplying the program [controllers](./src/controllers/)  with functionalities and data. You may add more classes based on [**Part 1**](#part-1-requirements-analysis) design.
 
-**1. Student Class**
+**1. [`Student`](./src/models/student.py) Class**
 
-- The Student class has following properties:
+- The [`Student`](./src/models/student.py) class has following properties:
   - name, email, password, and a list of subjects.
   - ID randomly generated 1 <= ID <= 999999, unique and formatted as 6-digits width. IDs < 6-digits width should be completed with zeroes from the left.
 - A student can only enroll in 4 subject maximum (A course of 4 subjects).
@@ -222,58 +241,96 @@ The program model has at least 3 classes: `Student`, `Subject`, and `Database`. 
 - A student is `PASS`/`FAIL` a course if the average mark of the subjects is >= 50
 - A student can change their password at any time.
 
-**2. Subject Class**
+**2. [`Subject`](./src/models/subject.py) Class**
 
-The Subject class has following properties:
 - ID randomly generated 1 <= ID <= 999, unique and formatted as 3-digits width. IDs < 3-digits width should be completed with zeroes from the left.
 - mark is randomly generated where 25 <= mark <= 100.
 - grade is determined based on the mark.
 
-**3. Database Class**
+**3. [`Database`](./src/models/database.py) Class**
 
-The Database class should contain the methods to:
 - Check if the file `students.data` exists before using it.
 - Create the file `students.data` if it doesn't exists.
 - Write objects to the file `students.data`.
 - Read objects from the file `students.data`.
 - Clear the objects from the file `students.data`.
 
-***NOTE**: All program menu(s) actions (Admin and Student) should use the `students.data` data and perform CRUD operations with this data.
+***NOTE**: All program menu(s) actions (`Admin` and `Student`) should use the `students.data` data and perform **CRUD** operations with this data.
 
 **4. BEST PRACTICES AND RECOMMENDATIONS**
 
-The program is best developed using classes (controllers) to manage the data exchange between the model classes (Student, Subject, Database) and the menu(s) actions. The controllers (for example: StudentController, SubjectController, etc…) are normal classes that use the `students.data` data and perform CRUD operations with this data. The controllers contain the system menus that use the model objects and work with the data file `students.data`.
+The program is best developed using classes ([controllers](./src/controllers/)) to manage the data exchange between the model classes (`Student`, `Subject`, `Database`) and the menu(s) actions. The [controllers](./src/controllers/) (for example: `StudentController`, `SubjectController`, etc…) are normal classes that use the `students.data` data and perform **CRUD** operations with this data. The [controllers](./src/controllers/) contain the system menus that use the model objects and work with the data file `students.data`.
 
-***NOTE**: You may add any controller classes based on **Part 1** case study design. Groups can implement the controllers the way that suits their program.
+***NOTE**: You may add any [controller](./src/controllers/) classes based on [**Part 1**](#part-1-requirements-analysis) case study design. Groups can implement the [controllers](./src/controllers/) the way that suits their program.
 
 ### II. Sample I/O
 
 The sample I/O should be used as a reference and guidance to help you understand the scenarios of the program. The sample I/O outlines several scenarios to help you understand how the program should work and how the output should be designed and formatted:
-1. The University System Scenario
-2. The Student System – Register
-3. The Student System – Login
-4. The Student Course System – Enrolment
-5. The Student Course System – Remove Subject
-6. The Student Course System – Change Password
-7. The Admin System – View Students – Groups - Partitions
-8. The Admin System – Remove a Student and Removing all Students
+
+<details>
+  <summary><b>1. The University System Scenario</b></summary>
+  <img src="./imgs/cli/cli1.png" width="600"/>
+</details>
+
+<details>
+  <summary><b>2. The Student System – Register</b></summary>
+  <img src="./imgs/cli/cli2.png" width="600"/>
+</details>
+
+<details>
+  <summary><b>3. The Student System – Login</b></summary>
+  <img src="./imgs/cli/cli3.png" width="600"/>
+</details>
+
+<details>
+  <summary><b>4. The Student Course System – Enrolment</b></summary>
+  <img src="./imgs/cli/cli4.png" width="600"/>
+</details>
+
+<details>
+  <summary><b>5. The Student Course System – Remove Subject</b></summary>
+  <img src="./imgs/cli/cli5.png" width="600"/>
+</details>
+
+<details>
+  <summary><b>6. The Student Course System – Change Password</b></summary>
+  <img src="./imgs/cli/cli6.png" width="600"/>
+</details>
+
+<details>
+  <summary><b>7. The Admin System – View Students – Groups - Partitions</b></summary>
+  <img src="./imgs/cli/cli7.png" width="600"/>
+</details>
+
+<details>
+  <summary><b>8. The Admin System – Remove a Student and Removing all Students</b></summary>
+  <img src="./imgs/cli/cli8.png" width="600"/>
+  <img src="./imgs/cli/cli9.png" width="600"/>
+</details>
 
 ### III. Case Study GUI Implementation (Optional)
 
 > Develop a GUI application called **GUIUniApp** only for students
 
+|         |         |         |
+|---------------|---------------|---------------|
+| ![](./imgs/gui/gui1.png) | ![](./imgs/gui/gui2.png) | ![](./imgs/gui/gui3.png) |
+| ![](./imgs/gui/gui4.png) | ![](./imgs/gui/gui5.png) | ![](./imgs/gui/gui6.png) |
+| ![](./imgs/gui/gui7.png) | ![](./imgs/gui/gui8.png) | ![](./imgs/gui/gui9.png) |
+| ![](./imgs/gui/gui10.png) | ![](./imgs/gui/gui11.png) | ![](./imgs/gui/gui12.png) |
+
 The university is also requesting a standalone GUI application called **GUIUniApp**, which is a prototype designed only for students to simplify the implementation. The case study GUI software implementation is an **optional** challenge task of **Part 2**. Your **GUIUniApp** should have at least **4** windows:
-- Login window: **GUIUniApp** should allow students (no Admin options) to login into the system. The login window is the GUI main window.
-- Enrolment window: Once a student logins correctly, they can enroll into subjects (**4** subjects maximum).
-- Subjects window: Every time a student is enrolled in a subject, the subject is added to the subject GUI menu enrolment list
-- Exception window: Handle possible exceptions, for example: empty login fields, incorrect student credentials, incorrect email format, enrolment in > **4** subjects, ...
+- [Login window](./src/views/login_window.py): **GUIUniApp** should allow students (no `Admin` options) to login into the system. The login window is the GUI main window.
+- [Enrolment window](./src/views/enrolment_window.py): Once a student logins correctly, they can enroll into subjects (**4** subjects maximum).
+- [Subjects window](./src/views/subject_window.py): Every time a student is enrolled in a subject, the subject is added to the subject GUI menu enrolment list.
+- [Exception window](./src/views/exception_window.py): Handle possible exceptions, for example: empty login fields, incorrect student credentials, incorrect email format, enrolment in > **4** subjects, ...
 
 | Entity            | Criteria                                                                                                                       | 
 |-------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| Login window      | Login window works and on login, students are taken to the enrolment window. Use the registered students from `students.data`  |
-| Enrolment window  | Enrolment window allows students to add subjects (maximum **4**)                                                               |
-| Subjects window   | Enrolled subjects are added to the list in the subjects' window                                                                |
-| Exception window  | Handle incorrect format exception and max 4 subjects' exception                                                                | 
+| [Login window](./src/views/login_window.py)      | [Login window](./src/views/login_window.py) works and on login, students are taken to the [Enrolment window](./src/views/enrolment_window.py). Use the registered students from `students.data`  |
+| [Enrolment window](./src/views/enrolment_window.py)  | [Enrolment window](./src/views/enrolment_window.py) allows students to add subjects (maximum **4**)                                                               |
+| [Subjects window](./src/views/subject_window.py)   | Enrolled subjects are added to the list in the subjects' window                                                                |
+| [Exception window](./src/views/exception_window.py)  | Handle incorrect format exception and max 4 subjects' exception                                                                | 
 
 In the GUI application, assume that the students are already registered:
 - Create and add a few student accounts to the application for testing.
